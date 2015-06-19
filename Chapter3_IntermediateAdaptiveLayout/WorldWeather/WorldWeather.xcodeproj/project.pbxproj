@@ -23,6 +23,7 @@
 		22859282198E41D2006945C7 /* DailyWeatherCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22859281198E41D2006945C7 /* DailyWeatherCollectionViewCell.swift */; };
 		22859284198E41EF006945C7 /* WeatherTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22859283198E41EF006945C7 /* WeatherTextViewController.swift */; };
 		22D21E3B19C8B0010090A99A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22D21E3A19C8B0010090A99A /* LaunchScreen.xib */; };
+		2A0752F41B3421CA007BB618 /* CityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0752F31B3421CA007BB618 /* CityTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		22859281198E41D2006945C7 /* DailyWeatherCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyWeatherCollectionViewCell.swift; sourceTree = "<group>"; };
 		22859283198E41EF006945C7 /* WeatherTextViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherTextViewController.swift; sourceTree = "<group>"; };
 		22D21E3A19C8B0010090A99A /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
+		2A0752F31B3421CA007BB618 /* CityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				22859253198E2C5F006945C7 /* MasterViewController.swift */,
+				2A0752F31B3421CA007BB618 /* CityTableViewCell.swift */,
 			);
 			path = MasterView;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 				22859282198E41D2006945C7 /* DailyWeatherCollectionViewCell.swift in Sources */,
 				22859284198E41EF006945C7 /* WeatherTextViewController.swift in Sources */,
 				22859252198E2C5F006945C7 /* AppDelegate.swift in Sources */,
+				2A0752F41B3421CA007BB618 /* CityTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

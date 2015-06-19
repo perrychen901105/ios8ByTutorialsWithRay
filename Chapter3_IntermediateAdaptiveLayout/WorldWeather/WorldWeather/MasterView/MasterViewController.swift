@@ -70,10 +70,10 @@ class MasterViewController: UITableViewController {
   }
   
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier("CityCell", forIndexPath: indexPath) as! UITableViewCell
+    let cell = tableView.dequeueReusableCellWithIdentifier("CityCell", forIndexPath: indexPath) as! CityTableViewCell
     
     let city = weatherData.cities[indexPath.row]
-    cell.textLabel?.text = city.name
+    cell.cityWeather = city
     return cell
   }
   

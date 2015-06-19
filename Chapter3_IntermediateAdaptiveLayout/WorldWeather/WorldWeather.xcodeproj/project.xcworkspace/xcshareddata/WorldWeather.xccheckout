@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>1B04948C-6A17-4C0E-8DE0-CE906BB6E637</string>
 	<key>IDESourceControlProjectName</key>
-	<string>WorldWeather</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>EDAEE0B7F0B54BA65717C207A241C3DCEC5D2C11</key>
 		<string>https://github.com/perrychen901105/ios8ByTutorialsWithRay.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Chapter3_IntermediateAdaptiveLayout/WorldWeather/WorldWeather.xcodeproj</string>
+	<string>Chapter3_IntermediateAdaptiveLayout/WorldWeather/WorldWeather.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>EDAEE0B7F0B54BA65717C207A241C3DCEC5D2C11</key>
