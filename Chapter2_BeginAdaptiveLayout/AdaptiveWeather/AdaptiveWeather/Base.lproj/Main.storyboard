@@ -17,26 +17,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="cloud" translatesAutoresizingMaskIntoConstraints="NO" id="F1w-WP-U2v">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cloud" translatesAutoresizingMaskIntoConstraints="NO" id="F1w-WP-U2v">
                                 <rect key="frame" x="150" y="20" width="300" height="197"/>
-                                <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
-                                    <rect key="frame" x="150" y="20" width="300" height="160"/>
-                                </variation>
                             </imageView>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AYm-wL-CFa" userLabel="TextContainer">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AYm-wL-CFa" userLabel="TextContainer">
                                 <rect key="frame" x="0.0" y="237" width="600" height="363"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cupertino" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cXW-aR-atc">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Cupertino" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="cXW-aR-atc">
                                         <rect key="frame" x="-7" y="10" width="614" height="177"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="150"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
+                                        <variation key="widthClass=compact">
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="90"/>
+                                        </variation>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="28C" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4xm-zG-zaZ">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="28C" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="4xm-zG-zaZ">
                                         <rect key="frame" x="73" y="58" width="454" height="295"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="250"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
+                                        <variation key="widthClass=compact">
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="150"/>
+                                        </variation>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.21568627450980393" green="0.50196078431372548" blue="0.72941176470588232" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -45,6 +48,8 @@
                                     <constraint firstAttribute="centerX" secondItem="cXW-aR-atc" secondAttribute="centerX" id="CQi-9r-IAo"/>
                                     <constraint firstAttribute="centerX" secondItem="4xm-zG-zaZ" secondAttribute="centerX" id="LRT-gv-DPd"/>
                                     <constraint firstAttribute="bottom" secondItem="4xm-zG-zaZ" secondAttribute="bottom" constant="10" id="b5y-J5-u92"/>
+                                    <constraint firstAttribute="width" secondItem="cXW-aR-atc" secondAttribute="width" id="dcM-5s-SUt"/>
+                                    <constraint firstAttribute="width" secondItem="4xm-zG-zaZ" secondAttribute="width" id="jlR-da-ux3"/>
                                     <constraint firstItem="cXW-aR-atc" firstAttribute="top" secondItem="AYm-wL-CFa" secondAttribute="top" constant="10" id="k35-Pl-ugS"/>
                                 </constraints>
                             </view>
@@ -52,16 +57,39 @@
                         <color key="backgroundColor" red="0.2901960784" green="0.6705882353" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="F1w-WP-U2v" secondAttribute="centerX" id="0PO-Kb-woy"/>
+                            <constraint firstAttribute="centerY" secondItem="F1w-WP-U2v" secondAttribute="centerY" id="0rJ-an-Zgl"/>
+                            <constraint firstItem="AYm-wL-CFa" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.5" id="C1X-cY-a3g"/>
+                            <constraint firstItem="AYm-wL-CFa" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="Giy-5d-to7"/>
+                            <constraint firstItem="F1w-WP-U2v" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.45" id="Y2A-Sx-CKr"/>
                             <constraint firstItem="F1w-WP-U2v" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="fdB-Fl-XcM"/>
                             <constraint firstAttribute="trailing" secondItem="AYm-wL-CFa" secondAttribute="trailing" id="kxv-zB-T3K"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="AYm-wL-CFa" secondAttribute="bottom" id="pHu-HW-5W4"/>
                             <constraint firstItem="F1w-WP-U2v" firstAttribute="height" relation="lessThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.4" id="qrn-Mk-XmD"/>
+                            <constraint firstItem="F1w-WP-U2v" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="10" id="tWS-WK-UP0"/>
                             <constraint firstItem="AYm-wL-CFa" firstAttribute="top" secondItem="F1w-WP-U2v" secondAttribute="bottom" constant="20" id="xuk-6v-NRM"/>
                             <constraint firstItem="AYm-wL-CFa" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="zfu-LN-QQo"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="0rJ-an-Zgl"/>
+                                <exclude reference="Y2A-Sx-CKr"/>
+                                <exclude reference="tWS-WK-UP0"/>
+                                <exclude reference="C1X-cY-a3g"/>
+                                <exclude reference="Giy-5d-to7"/>
+                            </mask>
+                        </variation>
                         <variation key="heightClass=compact">
                             <mask key="constraints">
                                 <exclude reference="0PO-Kb-woy"/>
+                                <include reference="0rJ-an-Zgl"/>
+                                <include reference="Y2A-Sx-CKr"/>
+                                <exclude reference="fdB-Fl-XcM"/>
+                                <exclude reference="qrn-Mk-XmD"/>
+                                <include reference="tWS-WK-UP0"/>
+                                <include reference="C1X-cY-a3g"/>
+                                <include reference="Giy-5d-to7"/>
+                                <exclude reference="xuk-6v-NRM"/>
+                                <exclude reference="zfu-LN-QQo"/>
                             </mask>
                         </variation>
                     </view>
