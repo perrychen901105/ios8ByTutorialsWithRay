@@ -22,9 +22,14 @@
 
 import UIKit
 
+// check for conformance instead of relying on a specific class, resulting in looser coupling between classes.
+@objc protocol WeeklyWeatherContainer {
+    var dailyWeather: [DailyWeather] { get set }
+}
+
 let reuseIdentifier = "DailyWeatherCell"
 
-class DailyWeatherCollectionViewController: UICollectionViewController {
+class DailyWeatherCollectionViewController: UICollectionViewController, WeeklyWeatherContainer {
 
   var dailyWeather: [DailyWeather] = [DailyWeather]() {
   didSet {

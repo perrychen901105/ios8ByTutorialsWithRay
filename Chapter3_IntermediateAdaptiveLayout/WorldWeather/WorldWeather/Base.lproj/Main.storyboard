@@ -195,11 +195,14 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ysq-o1-8AH" userLabel="TextContainer">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="330"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" ambiguous="YES" misplaced="YES" text="City" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="omh-zH-HAS" userLabel="CityLabel">
-                                        <rect key="frame" x="0.0" y="10" width="600" height="177"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="City" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="omh-zH-HAS" userLabel="CityLabel">
+                                        <rect key="frame" x="0.0" y="150" width="600" height="177"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="150"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
+                                        <variation key="heightClass=compact" misplaced="YES">
+                                            <rect key="frame" x="0.0" y="150" width="300" height="177"/>
+                                        </variation>
                                         <variation key="widthClass=compact">
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="100"/>
                                         </variation>
@@ -231,12 +234,22 @@
                                         <exclude reference="EPz-ac-c4l"/>
                                     </mask>
                                 </variation>
+                                <variation key="heightClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="EPz-ac-c4l"/>
+                                    </mask>
+                                </variation>
                             </view>
-                            <containerView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sup-j3-gt0">
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sup-j3-gt0">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="1yJ-c2-Jqc"/>
                                 </constraints>
+                                <variation key="heightClass=compact">
+                                    <mask key="constraints">
+                                        <exclude reference="1yJ-c2-Jqc"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <segue destination="988-rV-JtB" kind="embed" id="YRd-gO-lkG"/>
                                 </connections>
@@ -244,12 +257,26 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="sup-j3-gt0" secondAttribute="trailing" id="6O7-7X-253"/>
+                            <constraint firstItem="sup-j3-gt0" firstAttribute="top" secondItem="MAh-5B-xbu" secondAttribute="bottom" id="KFR-al-Mvx"/>
                             <constraint firstItem="Ysq-o1-8AH" firstAttribute="height" secondItem="yY8-cW-ib9" secondAttribute="height" id="N6Z-wD-ry9"/>
                             <constraint firstItem="Ysq-o1-8AH" firstAttribute="width" secondItem="yY8-cW-ib9" secondAttribute="width" id="TLp-g5-dL9"/>
+                            <constraint firstItem="sup-j3-gt0" firstAttribute="leading" secondItem="yY8-cW-ib9" secondAttribute="leading" id="bzx-Ya-yH8"/>
                             <constraint firstItem="omh-zH-HAS" firstAttribute="top" secondItem="sup-j3-gt0" secondAttribute="bottom" id="cFJ-3J-s2q"/>
                             <constraint firstAttribute="centerX" secondItem="Ysq-o1-8AH" secondAttribute="centerX" id="eXO-x4-4FV"/>
                             <constraint firstAttribute="centerY" secondItem="Ysq-o1-8AH" secondAttribute="centerY" id="zqA-ka-krD"/>
                         </constraints>
+                        <variation key="heightClass=compact">
+                            <mask key="subviews">
+                                <exclude reference="sup-j3-gt0"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="6O7-7X-253"/>
+                                <exclude reference="KFR-al-Mvx"/>
+                                <exclude reference="bzx-Ya-yH8"/>
+                                <exclude reference="cFJ-3J-s2q"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="cityNameLabel" destination="omh-zH-HAS" id="WDa-5q-ick"/>
