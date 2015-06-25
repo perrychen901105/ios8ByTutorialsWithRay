@@ -47,8 +47,13 @@ class DetailViewController: UIViewController {
     // Prep the navigation item so the back button doesn't disappear
     navigationItem.leftItemsSupplementBackButton = true
     navigationItem.hidesBackButton = false
+    configureTraitOverrideForSize(view.bounds.size)
   }
   
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        configureTraitOverrideForSize(size)
+    }
+    
   // MARK: - Utility methods
   private func configureView() {
     if let cityWeather = cityWeather {
@@ -64,5 +69,16 @@ class DetailViewController: UIViewController {
       }
     }
   }
+    
+    private func configureTraitOverrideForSize(size: CGSize) {
+        var traitOverride: UITraitCollection?
+        if size.height < 1000 {
+            traitOverride = UITraitCollection(verticalSizeClass: .Compact)
+        }
+        for vc in childViewControllers as! [UIViewController] {
+            setOverrideTraitCollection(traitOverride, forChildViewController: vc)
+        }
+    }
+    
 }
 
