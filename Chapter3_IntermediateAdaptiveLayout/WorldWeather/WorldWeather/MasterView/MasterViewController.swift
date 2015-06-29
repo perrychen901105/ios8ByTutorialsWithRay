@@ -33,6 +33,7 @@ class MasterViewController: UITableViewController {
       self.clearsSelectionOnViewWillAppear = false
       self.preferredContentSize = CGSize(width: 320.0, height: 600.0)
     }
+    prepareNavigationBarAppearance()
   }
   
   override func viewDidLoad() {
@@ -50,7 +51,16 @@ class MasterViewController: UITableViewController {
     tableView.estimatedRowHeight = 100
   }
   
-  
+  // MARK: - Custom
+    private func prepareNavigationBarAppearance() {
+        let font = UIFont(name: "HelveticaNeue-Light", size: 30)!
+        let regularVertical = UITraitCollection(verticalSizeClass: .Regular)
+        UINavigationBar.appearanceForTraitCollection(regularVertical).titleTextAttributes = [NSFontAttributeName: font]
+        let compactVertical = UITraitCollection(verticalSizeClass: .Compact)
+        UINavigationBar.appearanceForTraitCollection(compactVertical).titleTextAttributes = [NSFontAttributeName: font.fontWithSize(20)]
+    }
+    
+    
   // MARK: - Segues
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     if segue.identifier == "showDetail" {
