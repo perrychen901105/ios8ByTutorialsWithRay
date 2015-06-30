@@ -10,31 +10,31 @@
 	<string>KhromaPal</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>1D7E7543ABA52EF67237E256C67D983760CA6559</key>
-		<string>ssh://bitbucket.org/sammyd/khromapal.git</string>
+		<key>EDAEE0B7F0B54BA65717C207A241C3DCEC5D2C11</key>
+		<string>https://github.com/perrychen901105/ios8ByTutorialsWithRay.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>swift/KhromaPal/KhromaPal.xcodeproj/project.xcworkspace</string>
+	<string>Chapter4_AdapativeViewControllerHierarchies/KhromaPal/KhromaPal.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>1D7E7543ABA52EF67237E256C67D983760CA6559</key>
+		<key>EDAEE0B7F0B54BA65717C207A241C3DCEC5D2C11</key>
 		<string>../../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://bitbucket.org/sammyd/khromapal.git</string>
+	<string>https://github.com/perrychen901105/ios8ByTutorialsWithRay.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>1D7E7543ABA52EF67237E256C67D983760CA6559</string>
+	<string>EDAEE0B7F0B54BA65717C207A241C3DCEC5D2C11</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>1D7E7543ABA52EF67237E256C67D983760CA6559</string>
+			<string>EDAEE0B7F0B54BA65717C207A241C3DCEC5D2C11</string>
 			<key>IDESourceControlWCCName</key>
-			<string>KhromaPal</string>
+			<string>ios8ByTutorialsWithRay</string>
 		</dict>
 	</array>
 </dict>
