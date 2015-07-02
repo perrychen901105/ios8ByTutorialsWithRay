@@ -28,6 +28,9 @@
 		22BE30351967521700772605 /* Colours.m in Sources */ = {isa = PBXBuildFile; fileRef = 22BE30341967521700772605 /* Colours.m */; };
 		22BE30371967609100772605 /* DefaultColourSwatchCollection.plist in Resources */ = {isa = PBXBuildFile; fileRef = 22BE30361967609100772605 /* DefaultColourSwatchCollection.plist */; };
 		22D21E3719C896030090A99A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22D21E3619C896030090A99A /* LaunchScreen.xib */; };
+		2AC7C59E1B450E030071BA75 /* PaletteContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC7C59D1B450E030071BA75 /* PaletteContainer.swift */; };
+		2AC7C5A01B4513E00071BA75 /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC7C59F1B4513E00071BA75 /* NavigationViewController.swift */; };
+		2AC7C5A51B4532660071BA75 /* UIViewControllerShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC7C5A41B4532660071BA75 /* UIViewControllerShow.swift */; };
 		2C5842FF1B443C0200781C02 /* TraitOverrideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5842FE1B443C0200781C02 /* TraitOverrideViewController.swift */; };
 		2C5843011B443E2800781C02 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5843001B443E2800781C02 /* SplitViewController.swift */; };
 /* End PBXBuildFile section */
@@ -68,6 +71,9 @@
 		22BE30341967521700772605 /* Colours.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Colours.m; sourceTree = "<group>"; };
 		22BE30361967609100772605 /* DefaultColourSwatchCollection.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DefaultColourSwatchCollection.plist; sourceTree = "<group>"; };
 		22D21E3619C896030090A99A /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
+		2AC7C59D1B450E030071BA75 /* PaletteContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaletteContainer.swift; sourceTree = "<group>"; };
+		2AC7C59F1B4513E00071BA75 /* NavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
+		2AC7C5A41B4532660071BA75 /* UIViewControllerShow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerShow.swift; sourceTree = "<group>"; };
 		2C5842FE1B443C0200781C02 /* TraitOverrideViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraitOverrideViewController.swift; sourceTree = "<group>"; };
 		2C5843001B443E2800781C02 /* SplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -134,6 +140,7 @@
 				22B5FFB319C4908C000936D2 /* Protocols */,
 				22BE302919674A6F00772605 /* Extensions */,
 				22BE2FF2196734C300772605 /* AppDelegate.swift */,
+				2AC7C59F1B4513E00071BA75 /* NavigationViewController.swift */,
 				2C5843001B443E2800781C02 /* SplitViewController.swift */,
 				2C5842FE1B443C0200781C02 /* TraitOverrideViewController.swift */,
 				22BE2FF619673AFF00772605 /* MasterViewController.swift */,
@@ -176,6 +183,7 @@
 		22B5FFB319C4908C000936D2 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				2AC7C59D1B450E030071BA75 /* PaletteContainer.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -205,6 +213,7 @@
 		22BE302919674A6F00772605 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				2AC7C5A41B4532660071BA75 /* UIViewControllerShow.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -309,9 +318,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2AC7C5A01B4513E00071BA75 /* NavigationViewController.swift in Sources */,
 				22BE302B19674A9D00772605 /* ColorPalette.swift in Sources */,
 				22BE2FF719673AFF00772605 /* MasterViewController.swift in Sources */,
 				22BE302F19674CC400772605 /* ColorPaletteCollection.swift in Sources */,
+				2AC7C5A51B4532660071BA75 /* UIViewControllerShow.swift in Sources */,
 				22BE30261967468E00772605 /* DetailViewController.swift in Sources */,
 				22BE2FF3196734C300772605 /* AppDelegate.swift in Sources */,
 				2C5843011B443E2800781C02 /* SplitViewController.swift in Sources */,
@@ -319,6 +330,7 @@
 				22BE30351967521700772605 /* Colours.m in Sources */,
 				2C5842FF1B443C0200781C02 /* TraitOverrideViewController.swift in Sources */,
 				22BE302D19674C8D00772605 /* PaletteTreeNode.swift in Sources */,
+				2AC7C59E1B450E030071BA75 /* PaletteContainer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

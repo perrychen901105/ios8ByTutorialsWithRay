@@ -22,7 +22,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, PaletteDisplayContainer {
 
   @IBOutlet weak var titleLabel: UILabel!
   @IBOutlet var colorLabels: [UILabel]!
@@ -64,7 +64,8 @@ class DetailViewController: UIViewController {
       }
     } else {
         if let empty = storyboard?.instantiateViewControllerWithIdentifier("NoPaletteSelected") as? UIViewController {
-            showDetailViewController(empty, sender: self)
+            showViewController(empty, sender: self)
+            //Detail
         }
         makeAllContentHidden(true)
     }
@@ -86,5 +87,10 @@ class DetailViewController: UIViewController {
       title = ""
     }
   }
+    
+    //MARK: palette delegate methods
+    func rwt_currentlyDisplayedPalette() -> ColorPalette? {
+        return colorPalette
+    }
 
 }

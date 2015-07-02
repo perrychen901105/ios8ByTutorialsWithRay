@@ -22,7 +22,7 @@
 
 import UIKit
 
-class MasterViewController: UITableViewController {
+class MasterViewController: UITableViewController, PaletteSelectionContainer {
   
   var detailViewController: DetailViewController? = nil
   var paletteCollection: ColorPaletteCollection = ColorPaletterProvider().rootCollection!
@@ -40,9 +40,22 @@ class MasterViewController: UITableViewController {
       let controllers = split.viewControllers
       self.detailViewController = controllers.last?.topViewController as? DetailViewController
     }
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleShowDetailVCTargetChanged:", name: UIViewControllerShowDetailTargetDidChangeNotification, object: nil)
   }
 
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIViewControllerShowDetailTargetDidChangeNotification, object: nil)
+    }
   
+    func handleShowDetailVCTargetChanged(sender: AnyObject?) {
+        if let indexPaths = tableView.indexPathsForVisibleRows() {
+            for indexPath in indexPaths as! [NSIndexPath] {
+                let cell = tableView.cellForRowAtIndexPath(indexPath)
+                tableView(tableView, willDisplayCell: cell!, forRowAtIndexPath: indexPath)
+            }
+        }
+    }
+    
   // #pragma mark - Table View
   
   override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -62,13 +75,14 @@ class MasterViewController: UITableViewController {
   
   override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
     // Make sure that on iPad we see the disclosure indicators as expected
-    if(UIDevice.currentDevice().userInterfaceIdiom == .Pad) {
-      if rowHasChildrenAtIndex(indexPath) {
-        cell.accessoryType = .DisclosureIndicator
-      } else {
-        cell.accessoryType = .None
-      }
+        var segueWillPush = false
+    if rowHasChildrenAtIndex(indexPath) {
+        segueWillPush = rwt_showVCWillResultInPush(self)
+    } else {
+        segueWillPush = rwt_showDetailVCWillResultInPush(self)
     }
+    cell.accessoryType = segueWillPush ? .DisclosureIndicator : .None
+    
   }
   
   
@@ -115,4 +129,15 @@ class MasterViewController: UITableViewController {
     return false
   }
   
+    
+    //MARK: delegate methods
+    func rwt_currentlySelectedPalette() -> ColorPalette? {
+        let selectedIndex = tableView.indexPathForSelectedRow()
+        if let indexPath = selectedIndex {
+            if !rowHasChildrenAtIndex(indexPath) {
+                return paletteCollection.children[indexPath.row] as? ColorPalette
+            }
+        }
+        return nil
+    }
 }
