@@ -133,14 +133,14 @@
 				22BE302819674A6F00772605 /* DataLayer */,
 				22B5FFB319C4908C000936D2 /* Protocols */,
 				22BE302919674A6F00772605 /* Extensions */,
-				222064711967336E00BD4FBC /* Main.storyboard */,
-				2220647A1967336E00BD4FBC /* Images.xcassets */,
-				222064631967336E00BD4FBC /* Supporting Files */,
 				22BE2FF2196734C300772605 /* AppDelegate.swift */,
 				2C5843001B443E2800781C02 /* SplitViewController.swift */,
 				2C5842FE1B443C0200781C02 /* TraitOverrideViewController.swift */,
 				22BE2FF619673AFF00772605 /* MasterViewController.swift */,
 				22BE30251967468E00772605 /* DetailViewController.swift */,
+				222064711967336E00BD4FBC /* Main.storyboard */,
+				2220647A1967336E00BD4FBC /* Images.xcassets */,
+				222064631967336E00BD4FBC /* Supporting Files */,
 				22D21E3619C896030090A99A /* LaunchScreen.xib */,
 			);
 			path = KhromaPal;

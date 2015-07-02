@@ -78,7 +78,8 @@ class MasterViewController: UITableViewController {
       let newTable = storyboard?.instantiateViewControllerWithIdentifier("MasterVC") as! MasterViewController
       newTable.paletteCollection = childCollection
       newTable.title = childCollection.name
-      navigationController?.pushViewController(newTable, animated: true)
+//      navigationController?.pushViewController(newTable, animated: true)
+        showViewController(newTable, sender: self)
     }
   }
   
