@@ -113,10 +113,10 @@
             </objects>
             <point key="canvasLocation" x="1043" y="55"/>
         </scene>
-        <!--View Controller-->
+        <!--No Palette Selected-->
         <scene sceneID="6oF-Nj-Upc">
             <objects>
-                <viewController storyboardIdentifier="NoPaletteSelected" id="Rsq-1s-GJV" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NoPaletteSelected" title="No Palette Selected" id="Rsq-1s-GJV" customClass="NoPaletteSelectedViewController" customModule="KhromaPal" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ldj-Ki-GaX"/>
                         <viewControllerLayoutGuide type="bottom" id="8X6-Ms-g3D"/>

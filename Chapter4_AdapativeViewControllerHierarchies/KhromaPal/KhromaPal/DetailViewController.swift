@@ -77,6 +77,15 @@ class DetailViewController: UIViewController, PaletteDisplayContainer {
     self.configureView()
   }
   
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        if let svc = splitViewController {
+            // adds the display mode button item, set the back button to visible
+            navigationItem.setLeftBarButtonItem(svc.displayModeButtonItem(), animated: true)
+            navigationItem.leftItemsSupplementBackButton = true
+            navigationItem.hidesBackButton = false
+        }
+    }
   
   // Private methods
   private func makeAllContentHidden(hidden: Bool) {
