@@ -31,6 +31,8 @@ class ColorSwatchCollectionViewController: UICollectionViewController, ColorSwat
   var swatchList: ColorSwatchList?
   var swatchSelectionDelegate: ColorSwatchSelectionDelegate?
   
+  var currentCellContentTransform = CGAffineTransformIdentity
+    
   // Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -73,13 +75,45 @@ class ColorSwatchCollectionViewController: UICollectionViewController, ColorSwat
     override func willTransitionToTraitCollection(newCollection: UITraitCollection, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         super.willTransitionToTraitCollection(newCollection, withTransitionCoordinator: coordinator)
         NSLog("the horizontal size class is \(newCollection.verticalSizeClass.rawValue)")
-        if let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout {
-            if newCollection.verticalSizeClass == .Compact {
-                flowLayout.scrollDirection = .Vertical
-            } else {
-                flowLayout.scrollDirection = .Horizontal
+//        if let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout {
+//            if newCollection.verticalSizeClass == .Compact {
+//                flowLayout.scrollDirection = .Vertical
+//            } else {
+//                flowLayout.scrollDirection = .Horizontal
+//            }
+//        }
+        // 1
+        // calculate the inverse transform. targetTransform() is a new property of UIViewControllerTransitionCoordinator; it returns a CGAffineTransform that represents the destination transform associated with the current transition
+        let targetTForm = coordinator.targetTransform()
+        let inverseTForm = CGAffineTransformInvert(targetTForm)
+        println("the target transform is \(targetTForm) , the inverse TForm is \(inverseTForm)")
+        // 2
+        // animateAlongsideTransition:completion: lets you specify an animation block to perform alongside the existing transition. You're not using the animation block here since you need to wait for AutoLayout to calculate the correct size of the new layout. Instead, you'll use the completion block that is called once the transition has finished.
+        coordinator.animateAlongsideTransition({ (_) -> Void in
+            // Empty
+            
+        }, completion: { (_) -> Void in
+            // 3
+            // Apply the inverse transform to the collection views layer. Since you're using AutoLayout, it's not possible to simply use the transform property of the view. Luckily, applying a transform to the underlying layer works just fine
+            self.view.layer.transform = CATransform3DConcat(self.view.layer.transform, CATransform3DMakeAffineTransform(inverseTForm))
+            // 4
+            // Update the bounds of the view. If the device rotation is 90 degrees, that is, portrait to landscape or vice versa, then you need to switch the width and the height
+            if abs(atan2(Double(targetTForm.b), Double(targetTForm.a)) / M_PI) < 0.9 {
+                self.view.bounds = CGRect(x: 0, y: 0, width: self.view.bounds.size.height, height: self.view.bounds.size.width)
             }
-        }
+            // 5
+            // The collection view is now in the correct location, is of the correct size and scrolls in the correct direction. However, the orientation of the cells is still incorrect. Iterate through the visible cells and animate each of them to the correct orientation.
+            self.currentCellContentTransform = CGAffineTransformConcat(self.currentCellContentTransform, targetTForm)
+            UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 1, options: nil, animations: { () -> Void in
+                for cell in self.collectionView?.visibleCells() as! [UICollectionViewCell] {
+                    cell.contentView.transform = self.currentCellContentTransform
+                }
+            }, completion: nil)
+        })
+    }
+
+    override func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+        cell.contentView.transform = currentCellContentTransform
     }
 }
 
