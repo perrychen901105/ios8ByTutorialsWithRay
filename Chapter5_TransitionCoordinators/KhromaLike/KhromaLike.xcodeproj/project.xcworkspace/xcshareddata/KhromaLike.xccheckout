@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>8632D732-D7F5-4F11-B917-026903E8A3DB</string>
 	<key>IDESourceControlProjectName</key>
-	<string>KhromaLike</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>EDAEE0B7F0B54BA65717C207A241C3DCEC5D2C11</key>
 		<string>https://github.com/perrychen901105/ios8ByTutorialsWithRay.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Chapter5_TransitionCoordinators/KhromaLike/KhromaLike.xcodeproj</string>
+	<string>Chapter5_TransitionCoordinators/KhromaLike/KhromaLike.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>EDAEE0B7F0B54BA65717C207A241C3DCEC5D2C11</key>

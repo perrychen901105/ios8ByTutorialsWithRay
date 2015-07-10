@@ -72,6 +72,8 @@ class ColorSwatchCollectionViewController: UICollectionViewController, ColorSwat
     }
   }
   
+    // for iphones
+    
     override func willTransitionToTraitCollection(newCollection: UITraitCollection, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         super.willTransitionToTraitCollection(newCollection, withTransitionCoordinator: coordinator)
         NSLog("the horizontal size class is \(newCollection.verticalSizeClass.rawValue)")
@@ -115,5 +117,22 @@ class ColorSwatchCollectionViewController: UICollectionViewController, ColorSwat
     override func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
         cell.contentView.transform = currentCellContentTransform
     }
+    
+    //MARK: for iPad
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        if let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout {
+            // Find the restrictive dimension
+            let minDimension = min(CGRectGetHeight(view.bounds), CGRectGetWidth(view.bounds))
+            println("the view bounds is \(view.bounds)")
+            let newItemSize = CGSize(width: minDimension, height: minDimension)
+            if flowLayout.itemSize != newItemSize {
+                flowLayout.itemSize = newItemSize
+                flowLayout.invalidateLayout()
+            }
+        }
+    }
+    
+    
 }
 
