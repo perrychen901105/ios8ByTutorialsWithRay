@@ -74,9 +74,12 @@ class ColorSwatchCollectionViewController: UICollectionViewController, ColorSwat
   
     // for iphones
     
-    override func willTransitionToTraitCollection(newCollection: UITraitCollection, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        super.willTransitionToTraitCollection(newCollection, withTransitionCoordinator: coordinator)
-        NSLog("the horizontal size class is \(newCollection.verticalSizeClass.rawValue)")
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+//    }
+//    
+//    override func willTransitionToTraitCollection(newCollection: UITraitCollection, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+//        super.willTransitionToTraitCollection(newCollection, withTransitionCoordinator: coordinator)
 //        if let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout {
 //            if newCollection.verticalSizeClass == .Compact {
 //                flowLayout.scrollDirection = .Vertical
