@@ -9,11 +9,19 @@
 import UIKit
 
 class PaddedLabel: UILabel {
-
+    // represents the current padding applied to the label.
     var verticalPadding = 0.0
     
     override func traitCollectionDidChange(previousTraitCollection: UITraitCollection?) {
-        
+        if traitCollection.verticalSizeClass == .Compact {
+            // No padding when vertically compact
+            verticalPadding = 0.0
+        } else {
+            // Padding when have regular size class
+            verticalPadding = 20.0
+        }
+        // Need to update the layout
+        invalidateIntrinsicContentSize()
     }
     
     /*
@@ -24,4 +32,11 @@ class PaddedLabel: UILabel {
     }
     */
 
+    override func intrinsicContentSize() -> CGSize {
+        var intrinsicSize = super.intrinsicContentSize()
+        // Add the padding
+        intrinsicSize.height += CGFloat(verticalPadding)
+        return intrinsicSize
+    }
+    
 }
