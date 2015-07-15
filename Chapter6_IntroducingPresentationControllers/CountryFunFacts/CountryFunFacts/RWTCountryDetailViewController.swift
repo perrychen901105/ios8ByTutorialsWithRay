@@ -107,7 +107,20 @@ func configureView() {
 
   
   @IBAction func quizAnswerButtonPressed(sender: UIButton) {
-    
+    let buttonTitle = sender.titleLabel?.text // 1 Retrieves the title string of the button so you can compare it against the correct answer.
+    var message = ""
+    if buttonTitle == country!.correctAnswer { // 2 Assign the appropriate response to message depending on whether the answer is correct or not.
+        message = "You answered correctly!"
+    } else {
+        message = "That answer is incorrect, please try again."
+    }
+    var alert = UIAlertController(title: nil, message: message, preferredStyle: UIAlertControllerStyle.ActionSheet)   // 3
+    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { (alert: UIAlertAction!) -> Void in
+        println("You tapped OK")
+    })) // 4
+    alert.popoverPresentationController?.sourceView = view
+    alert.popoverPresentationController?.sourceRect = sender.frame
+    self.presentViewController(alert, animated: true, completion: nil)
   }
   
   // #pragma mark - Split view
