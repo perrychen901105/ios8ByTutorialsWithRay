@@ -98,8 +98,24 @@ func configureView() {
         answer4Button.setTitle(country!.quizAnswers[3],forState:UIControlState.Normal)
       }
     }
+    let detailsButton: UIBarButtonItem = UIBarButtonItem(title: "Facts", style: UIBarButtonItemStyle.Plain, target: self, action: "displayFacts:")
+    navigationItem.rightBarButtonItem = detailsButton
   }
   
+    func displayFacts(sender: UIBarButtonItem) {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        var contentViewController: RWTCountryPopoverViewController = storyboard.instantiateViewControllerWithIdentifier("RWTCountryPopoverViewController") as! RWTCountryPopoverViewController
+        contentViewController.country = country // 1
+        
+        contentViewController.modalPresentationStyle = UIModalPresentationStyle.Popover                      //  2  the key to configure the view controller to appear as a popover on regular-width screens
+        
+        var detailPopover: UIPopoverPresentationController = contentViewController.popoverPresentationController!
+        detailPopover.barButtonItem = sender // 3
+        detailPopover.permittedArrowDirections = UIPopoverArrowDirection.Any
+        presentViewController(contentViewController, animated: true, completion: nil)   // 4
+    }
+    
   override func updateViewConstraints() {
     super.updateViewConstraints()
     quizQuestionLabel.preferredMaxLayoutWidth = view.bounds.size.width - 40
@@ -144,6 +160,8 @@ func configureView() {
       
       return true
   }
+    
+    
 }
 
 
