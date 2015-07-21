@@ -25,7 +25,7 @@
 import UIKit
 
 class RWTCountryDetailViewController: UIViewController,
-UISplitViewControllerDelegate {
+UISplitViewControllerDelegate, UIPopoverPresentationControllerDelegate {
   
   @IBOutlet var flagImageView: UIImageView!
   @IBOutlet var quizQuestionLabel: UILabel!
@@ -113,7 +113,18 @@ func configureView() {
         var detailPopover: UIPopoverPresentationController = contentViewController.popoverPresentationController!
         detailPopover.barButtonItem = sender // 3
         detailPopover.permittedArrowDirections = UIPopoverArrowDirection.Any
+        detailPopover.delegate = self
         presentViewController(contentViewController, animated: true, completion: nil)   // 4
+    }
+    
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.None
+    }
+    //presentationController(_:viewControllerForAdaptivePresentationStyle:)
+    //wraps the content view controller in a navigation controller when the app is run on the iPhone and the view is in full screen presentation mode.
+    func presentationController(controller: UIPresentationController, viewControllerForAdaptivePresentationStyle style: UIModalPresentationStyle) -> UIViewController? {
+        let navController = UINavigationController(rootViewController: controller.presentedViewController)
+        return navController
     }
     
   override func updateViewConstraints() {

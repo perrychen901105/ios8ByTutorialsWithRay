@@ -28,7 +28,7 @@ import UIKit
   optional func searchCountrySelected()
 }
 
-class RWTCountryResultsController: UITableViewController
+class RWTCountryResultsController: UITableViewController, UISearchResultsUpdating
  {
   
   var countries = RWTCountry.countries()
@@ -44,6 +44,13 @@ class RWTCountryResultsController: UITableViewController
     bundle:nil)
     tableView.registerNib(nib, forCellReuseIdentifier:"Cell")
   }
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        if !searchController.active {
+            return
+        }
+        self.filterContentForSearchText(searchController.searchBar.text)
+    }
 
   // #pragma mark – Table View
   override func numberOfSectionsInTableView(tableView:
@@ -94,5 +101,9 @@ class RWTCountryResultsController: UITableViewController
     
     tableView.reloadData()
   }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 246.0
+    }
   
 }
