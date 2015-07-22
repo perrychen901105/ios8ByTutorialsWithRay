@@ -17,6 +17,7 @@
 		0199933F197EEAE70097E0FD /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0199933E197EEAE70097E0FD /* Country.swift */; };
 		01999341197EEFF90097E0FD /* CountryData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 01999340197EEFF90097E0FD /* CountryData.plist */; };
 		01999343197EF0EC0097E0FD /* CollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01999342197EF0EC0097E0FD /* CollectionViewLayout.swift */; };
+		2AC41F8F1B5F915300FB3D6A /* SimpleTransitioner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC41F8E1B5F915300FB3D6A /* SimpleTransitioner.swift */; };
 		2AEBDF981B5E416700FC6269 /* SimplePresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEBDF971B5E416700FC6269 /* SimplePresentationController.swift */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +46,7 @@
 		0199933E197EEAE70097E0FD /* Country.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		01999340197EEFF90097E0FD /* CountryData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CountryData.plist; sourceTree = "<group>"; };
 		01999342197EF0EC0097E0FD /* CollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewLayout.swift; sourceTree = "<group>"; };
+		2AC41F8E1B5F915300FB3D6A /* SimpleTransitioner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleTransitioner.swift; sourceTree = "<group>"; };
 		2AEBDF971B5E416700FC6269 /* SimplePresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimplePresentationController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -69,6 +71,7 @@
 		018B7D781980652100C62AE7 /* Transitioners */ = {
 			isa = PBXGroup;
 			children = (
+				2AC41F8E1B5F915300FB3D6A /* SimpleTransitioner.swift */,
 			);
 			name = Transitioners;
 			sourceTree = "<group>";
@@ -250,6 +253,7 @@
 				01999343197EF0EC0097E0FD /* CollectionViewLayout.swift in Sources */,
 				2AEBDF981B5E416700FC6269 /* SimplePresentationController.swift in Sources */,
 				0199933D197EE7500097E0FD /* CollectionViewCell.swift in Sources */,
+				2AC41F8F1B5F915300FB3D6A /* SimpleTransitioner.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
