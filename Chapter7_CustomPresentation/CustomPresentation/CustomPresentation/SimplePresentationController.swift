@@ -61,7 +61,8 @@ class SimplePresentationController: UIPresentationController, UIAdaptivePresenta
     override func shouldPresentInFullscreen() -> Bool {
         return true
     }
-    
+    // very important
+    // adaptivePresentationStyleForPresentationController() returns UIModalPresentationStyle.FullScreen so that the presented view controller’s view takes up the full screen.
     func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.OverFullScreen
     }

@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>7D4BC20F-C796-4A20-AE32-5645693800DA</string>
 	<key>IDESourceControlProjectName</key>
-	<string>CustomPresentation</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>EDAEE0B7F0B54BA65717C207A241C3DCEC5D2C11</key>
 		<string>https://github.com/perrychen901105/ios8ByTutorialsWithRay.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Chapter7_CustomPresentation/CustomPresentation/CustomPresentation.xcodeproj</string>
+	<string>Chapter7_CustomPresentation/CustomPresentation/CustomPresentation.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>EDAEE0B7F0B54BA65717C207A241C3DCEC5D2C11</key>

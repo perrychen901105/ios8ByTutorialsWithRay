@@ -32,7 +32,9 @@ class Country: NSObject {
   var quizQuestion: String = ""
   var correctAnswer: String = ""
   var quizAnswers: [String] = [];
-  
+    var isHidden: Bool = false
+    
+    
   class func countries() ->NSArray {
     let plistFile =
     NSBundle.mainBundle().pathForResource("CountryData",

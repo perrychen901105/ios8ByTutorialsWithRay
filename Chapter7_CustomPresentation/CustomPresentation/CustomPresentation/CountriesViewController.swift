@@ -29,8 +29,9 @@ class CountriesViewController: UIViewController {
   @IBOutlet var collectionViewLeadingConstraint: NSLayoutConstraint!
   @IBOutlet var collectionViewTrailingConstraint: NSLayoutConstraint!
   
+    var selectionObject: SelectionObject?
   var countries = Country.countries()
-  
+    var awesomeTransitionDelegate: AwesomeTransitioningDelegate?
     let simpleTransitionDelegate = SimpleTransitioningDelegate()
     
   override func viewDidLoad() {
@@ -96,6 +97,12 @@ class CountriesViewController: UIViewController {
       cell.imageView.image = image;
       cell.imageView.layer.cornerRadius = 4.0
       
+        if selectionObject != nil && selectionObject?.country.countryName == country.countryName {
+            cell.imageView.hidden = selectionObject!.country.isHidden
+        } else {
+            cell.imageView.hidden = false
+        }
+        
       return cell;
   }
   
@@ -104,8 +111,9 @@ class CountriesViewController: UIViewController {
   
   func collectionView(collectionView: UICollectionView!,
     didSelectItemAtIndexPath indexPath: NSIndexPath!) {
-      showSimpleOverlayForIndexPath(indexPath)
-
+//      showSimpleOverlayForIndexPath(indexPath)
+        showAwesomeOverlayForIndexPath(indexPath)
+        
   }
   
     func showSimpleOverlayForIndexPath(indexPath: NSIndexPath) {
@@ -119,5 +127,68 @@ class CountriesViewController: UIViewController {
     }
   
   
+    func showAwesomeOverlayForIndexPath(indexPath: NSIndexPath) {
+        let country = countries[indexPath.row] as! Country
+        let selectedCell = collectionView.cellForItemAtIndexPath(indexPath) as! CollectionViewCell
+        
+        // 1  Get the collection view cells's frame for the cell at the index path.
+        var rect = selectedCell.frame
+        let origin = view.convertPoint(rect.origin, fromView: selectedCell.superview)
+        rect.origin = origin
+        
+        selectionObject = SelectionObject(country: country, selectedCellIndexPath: indexPath, originalCellPosition: rect)
+        
+        // 2
+        // 3
+        awesomeTransitionDelegate = AwesomeTransitioningDelegate(selectedObject: selectionObject!)
+        transitioningDelegate = awesomeTransitionDelegate
+        
+        // 4
+        var overlay = OverlayViewController(country: country)
+        overlay.transitioningDelegate = awesomeTransitionDelegate
+        presentViewController(overlay, animated: true, completion: nil)
+        
+        UIView.animateWithDuration(0.1, animations: { () -> Void in
+            selectedCell.imageView.alpha = 0.0
+        }, completion: nil)
+        
+    }
+    
+    func hideImage(hidden: Bool, indexPath: NSIndexPath) {
+        if selectionObject != nil {
+            selectionObject!.country.isHidden = hidden
+        }
+        
+        if indexPath.row < self.countries.count {
+            collectionView.reloadItemsAtIndexPaths([indexPath])
+        }
+    }
+    
+    func indexPathsForAllItems() -> NSMutableArray {
+        var count = countries.count
+        var indexPaths = NSMutableArray()
+        for var index = 0; index < count; ++index {
+            indexPaths.addObject(NSIndexPath(forItem: index, inSection: 0))
+        }
+        return indexPaths
+    }
+    
+    func changeCellSpacingForPresentation(presentation: Bool) {
+        if presentation {
+            var indexPaths = indexPathsForAllItems()
+            countries = NSArray()
+            collectionView.deleteItemsAtIndexPaths(indexPaths as [AnyObject])
+        } else {
+            countries = Country.countries()
+            var indexPaths = indexPathsForAllItems()
+            collectionView.insertItemsAtIndexPaths(indexPaths as [AnyObject])
+        }
+    }
+    
+    func frameForCellAtIndexPath(indexPath: NSIndexPath) -> CGRect {
+        var cell = collectionView.cellForItemAtIndexPath(indexPath) as! CollectionViewCell
+        return cell.frame
+    }
+    
 }
 
