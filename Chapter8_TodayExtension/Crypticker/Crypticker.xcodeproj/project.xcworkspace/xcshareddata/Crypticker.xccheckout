@@ -5,16 +5,16 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>7D4BC20F-C796-4A20-AE32-5645693800DA</string>
+	<string>043EE17E-B224-42C3-81BC-710FE8B639C9</string>
 	<key>IDESourceControlProjectName</key>
-	<string>CustomPresentation</string>
+	<string>Crypticker</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>EDAEE0B7F0B54BA65717C207A241C3DCEC5D2C11</key>
 		<string>https://github.com/perrychen901105/ios8ByTutorialsWithRay.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Chapter7_CustomPresentation/CustomPresentation/CustomPresentation.xcodeproj</string>
+	<string>Chapter8_TodayExtension/Crypticker/Crypticker.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>EDAEE0B7F0B54BA65717C207A241C3DCEC5D2C11</key>
