@@ -81,7 +81,7 @@ public class SavedImageService {
   }
   
   private func urlForDirectoryWithName(name: String) -> NSURL! {
-    if let containerURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.com.raywenderlich.swift.imgvue1") {
+    if let containerURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.com.aodshop.swift.imgvue") {
       var contairURLWithName = containerURL.URLByAppendingPathComponent(name)
       if !NSFileManager.defaultManager().fileExistsAtPath(contairURLWithName.path!) {
         NSFileManager.defaultManager().createDirectoryAtPath(containerURL.path!, withIntermediateDirectories: false, attributes: nil, error: nil)

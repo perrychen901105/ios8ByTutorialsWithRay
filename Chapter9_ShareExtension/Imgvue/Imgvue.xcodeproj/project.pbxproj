@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A3B969C1B69D2E4001D023E /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3B969B1B69D2E4001D023E /* ShareViewController.swift */; };
+		2A3B969E1B69D2E4001D023E /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A3B969D1B69D2E4001D023E /* MainInterface.storyboard */; };
+		2A3B96A11B69D2E4001D023E /* Imgvue Upload.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2A3B96971B69D2E4001D023E /* Imgvue Upload.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2A3B96A71B69D56B001D023E /* ImgvueKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839576491969275D0033B974 /* ImgvueKit.framework */; };
+		2AC6AB331B6A10CC003593D2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2AC6AB321B6A10CC003593D2 /* Images.xcassets */; };
 		833FDE6A19C2B933003EB25E /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = 83957670196928490033B974 /* NSData+ImageContentType.m */; };
 		833FDE6B19C2B933003EB25E /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 83957672196928490033B974 /* SDImageCache.m */; };
 		833FDE6C19C2B933003EB25E /* SDWebImageCompat.m in Sources */ = {isa = PBXBuildFile; fileRef = 83957674196928490033B974 /* SDWebImageCompat.m */; };
@@ -44,6 +49,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		2A3B969F1B69D2E4001D023E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 839575AB196925690033B974 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2A3B96961B69D2E4001D023E;
+			remoteInfo = "Imgvue Upload";
+		};
 		839575C8196925690033B974 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 839575AB196925690033B974 /* Project object */;
@@ -75,6 +87,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		2A3B96A51B69D2E5001D023E /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				2A3B96A11B69D2E4001D023E /* Imgvue Upload.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		839575FA1969260A0033B974 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -89,6 +112,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2A3B96971B69D2E4001D023E /* Imgvue Upload.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Imgvue Upload.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A3B969A1B69D2E4001D023E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2A3B969B1B69D2E4001D023E /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		2A3B969D1B69D2E4001D023E /* MainInterface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
+		2A3B96A61B69D515001D023E /* Imgvue Upload.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Imgvue Upload.entitlements"; sourceTree = "<group>"; };
+		2AC6AB321B6A10CC003593D2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		833FDE6919C2B5A7003EB25E /* Imgvue-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Imgvue-Bridging-Header.h"; sourceTree = "<group>"; };
 		838016B41990DA660026613B /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		838C8EBC1969EF150060B7C3 /* ImageFilterService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageFilterService.swift; sourceTree = "<group>"; };
@@ -149,6 +178,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2A3B96941B69D2E4001D023E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A3B96A71B69D56B001D023E /* ImgvueKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		839575B0196925690033B974 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -182,6 +219,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2A3B96981B69D2E4001D023E /* Imgvue Upload */ = {
+			isa = PBXGroup;
+			children = (
+				2A3B96A61B69D515001D023E /* Imgvue Upload.entitlements */,
+				2A3B969B1B69D2E4001D023E /* ShareViewController.swift */,
+				2A3B969D1B69D2E4001D023E /* MainInterface.storyboard */,
+				2AC6AB321B6A10CC003593D2 /* Images.xcassets */,
+				2A3B96991B69D2E4001D023E /* Supporting Files */,
+			);
+			path = "Imgvue Upload";
+			sourceTree = "<group>";
+		};
+		2A3B96991B69D2E4001D023E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2A3B969A1B69D2E4001D023E /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		833FDE6819C2B504003EB25E /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
@@ -198,6 +255,7 @@
 				839575EA1969260A0033B974 /* ImgvueKitTests */,
 				8395764A1969275D0033B974 /* ImgvueKit */,
 				839576571969275D0033B974 /* ImgvueKitTests */,
+				2A3B96981B69D2E4001D023E /* Imgvue Upload */,
 				839575B4196925690033B974 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -209,6 +267,7 @@
 				839575C7196925690033B974 /* ImgvueTests.xctest */,
 				839576491969275D0033B974 /* ImgvueKit.framework */,
 				839576531969275D0033B974 /* ImgvueKitTests.xctest */,
+				2A3B96971B69D2E4001D023E /* Imgvue Upload.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -404,6 +463,23 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		2A3B96961B69D2E4001D023E /* Imgvue Upload */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2A3B96A21B69D2E5001D023E /* Build configuration list for PBXNativeTarget "Imgvue Upload" */;
+			buildPhases = (
+				2A3B96931B69D2E4001D023E /* Sources */,
+				2A3B96941B69D2E4001D023E /* Frameworks */,
+				2A3B96951B69D2E4001D023E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Imgvue Upload";
+			productName = "Imgvue Upload";
+			productReference = 2A3B96971B69D2E4001D023E /* Imgvue Upload.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		839575B2196925690033B974 /* Imgvue */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 839575D1196925690033B974 /* Build configuration list for PBXNativeTarget "Imgvue" */;
@@ -412,12 +488,14 @@
 				839575B0196925690033B974 /* Frameworks */,
 				839575B1196925690033B974 /* Resources */,
 				839575FA1969260A0033B974 /* Embed Frameworks */,
+				2A3B96A51B69D2E5001D023E /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				8395765D1969275D0033B974 /* PBXTargetDependency */,
 				839576611969275D0033B974 /* PBXTargetDependency */,
+				2A3B96A01B69D2E4001D023E /* PBXTargetDependency */,
 			);
 			name = Imgvue;
 			productName = Imgvue;
@@ -487,12 +565,21 @@
 				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = "Ray Wenderlich LLC";
 				TargetAttributes = {
-					839575B2196925690033B974 = {
-						CreatedOnToolsVersion = 6.0;
-						DevelopmentTeam = X28LAA5D4H;
+					2A3B96961B69D2E4001D023E = {
+						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = JEKL22D8G5;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
-								enabled = 0;
+								enabled = 1;
+							};
+						};
+					};
+					839575B2196925690033B974 = {
+						CreatedOnToolsVersion = 6.0;
+						DevelopmentTeam = JEKL22D8G5;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
 							};
 							com.apple.BackgroundModes = {
 								enabled = 0;
@@ -529,11 +616,21 @@
 				839575C6196925690033B974 /* ImgvueTests */,
 				839576481969275D0033B974 /* ImgvueKit */,
 				839576521969275D0033B974 /* ImgvueKitTests */,
+				2A3B96961B69D2E4001D023E /* Imgvue Upload */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		2A3B96951B69D2E4001D023E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A3B969E1B69D2E4001D023E /* MainInterface.storyboard in Resources */,
+				2AC6AB331B6A10CC003593D2 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		839575B1196925690033B974 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -567,6 +664,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2A3B96931B69D2E4001D023E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A3B969C1B69D2E4001D023E /* ShareViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		839575AF196925690033B974 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -626,6 +731,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		2A3B96A01B69D2E4001D023E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2A3B96961B69D2E4001D023E /* Imgvue Upload */;
+			targetProxy = 2A3B969F1B69D2E4001D023E /* PBXContainerItemProxy */;
+		};
 		839575C9196925690033B974 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 839575B2196925690033B974 /* Imgvue */;
@@ -660,6 +770,49 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		2A3B96A31B69D2E5001D023E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Imgvue Upload/Imgvue Upload.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Imgvue Upload/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		2A3B96A41B69D2E5001D023E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Imgvue Upload/Imgvue Upload.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Imgvue Upload/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		839575CF196925690033B974 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -744,6 +897,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = Imgvue/Imgvue.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Imgvue/Info.plist;
@@ -759,6 +913,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = Imgvue/Imgvue.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Imgvue/Info.plist;
@@ -887,6 +1042,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2A3B96A21B69D2E5001D023E /* Build configuration list for PBXNativeTarget "Imgvue Upload" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A3B96A31B69D2E5001D023E /* Debug */,
+				2A3B96A41B69D2E5001D023E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		839575AE196925690033B974 /* Build configuration list for PBXProject "Imgvue" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

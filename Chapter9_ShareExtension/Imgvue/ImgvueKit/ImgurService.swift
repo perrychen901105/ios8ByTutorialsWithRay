@@ -25,7 +25,7 @@ import UIKit
 
 public class ImgurService: NSObject, NSURLSessionDataDelegate, NSURLSessionTaskDelegate {
   
-  private let imgurClientId = "YOUR_CLIENT_ID"
+  private let imgurClientId = "30a1864949e2b26"
   private let imgurAPIBaseUrlString = "https://api.imgur.com/3/"
   
   public var session: NSURLSession!
