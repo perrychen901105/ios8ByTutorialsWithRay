@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>B6BBA5C6-F2E0-40D2-B119-5CE35C21C066</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>Imgvue</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>EDAEE0B7F0B54BA65717C207A241C3DCEC5D2C11</key>
 		<string>https://github.com/perrychen901105/ios8ByTutorialsWithRay.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Chapter9_ShareExtension/Imgvue/Imgvue.xcodeproj/project.xcworkspace</string>
+	<string>Chapter9_ShareExtension/Imgvue/Imgvue.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>EDAEE0B7F0B54BA65717C207A241C3DCEC5D2C11</key>
