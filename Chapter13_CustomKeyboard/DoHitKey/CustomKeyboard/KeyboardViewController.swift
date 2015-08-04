@@ -74,6 +74,21 @@ class KeyboardViewController: UIInputViewController, CLLocationManagerDelegate {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    let nib = UINib(nibName: "KeyboardView", bundle: nil)
+    let objects = nib.instantiateWithOwner(self, options: nil);
+    containerView = objects[0] as! UIView
+    
+    view = containerView
+    
+    configureGesturesForView(rowCustomAlt1)
+    configureGesturesForView(rowCustomAlt2)
+    configureGesturesForView(rowCustomAlt3)
+    configureGesturesForView(rowCustomAlt4)
+    
+    themeData = KeyboardThemeData.configureThemeData()
+    
+    getCurrentAppSettings()
+    configureCoreLocationManager()
   }
   
   override func didReceiveMemoryWarning() {
