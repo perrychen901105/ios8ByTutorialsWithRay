@@ -5,16 +5,16 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>81B48C98-CA50-4BB7-A4DA-517E6BBFD5BA</string>
+	<string>C88C0FBB-D05C-41AB-AB1A-161760A3D5F9</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>MultipleAssetPicker</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>EDAEE0B7F0B54BA65717C207A241C3DCEC5D2C11</key>
 		<string>https://github.com/perrychen901105/ios8ByTutorialsWithRay.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Chapter13_CustomKeyboard/DoHitKey/DoHitKey.xcodeproj/project.xcworkspace</string>
+	<string>Chapter19_beginPhotoKit/MultipleAssetPicker/MultipleAssetPicker.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>EDAEE0B7F0B54BA65717C207A241C3DCEC5D2C11</key>
