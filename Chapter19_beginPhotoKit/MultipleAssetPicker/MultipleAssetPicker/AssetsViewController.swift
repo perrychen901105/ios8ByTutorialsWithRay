@@ -31,6 +31,12 @@ class AssetsViewController: UICollectionViewController, UICollectionViewDelegate
   
   private var assetThumbnailSize = CGSizeZero
   
+  private let imageManager: PHCachingImageManager = PHCachingImageManager()
+  private var cachingIndexes: [NSIndexPath] = []
+  private var lastCacheFrameCenter: CGFloat = 0
+  // allow you to calculate which assets to cache without blocking the main thread
+  private var cacheQueue = dispatch_queue_create("cache_queue", DISPATCH_QUEUE_SERIAL)
+  
   // MARK: UIViewController
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -131,7 +137,7 @@ class AssetsViewController: UICollectionViewController, UICollectionViewDelegate
     options.networkAccessAllowed = true
     // 3
     // The Photos Framework provides a low quality version of the asset if it’s immediately available
-    PHImageManager.defaultManager().requestImageForAsset(asset, targetSize: assetThumbnailSize, contentMode: .AspectFill, options: options) { (result, info) -> Void in
+    imageManager.requestImageForAsset(asset, targetSize: assetThumbnailSize, contentMode: .AspectFill, options: options) { (result, info) -> Void in
       if reuseCount == cell.reuseCount {
         cell.imageView.image = result
       }
@@ -156,5 +162,43 @@ class AssetsViewController: UICollectionViewController, UICollectionViewDelegate
     }
     let width = collectionView.bounds.size.width / CGFloat(thumbsPerRow)
     return CGSize(width: width,height: width)
+  }
+  
+  //MARK: Caching
+  func updateCache() {
+    // 1. Determine whether or not you want to cache
+    // only recalculate if the user scrolls more than one-third of the screen height
+    let currentFrameCenter = CGRectGetMidY(collectionView!.bounds)
+    if abs(currentFrameCenter - lastCacheFrameCenter) < CGRectGetHeight(collectionView!.bounds) / 3 {
+      return
+    }
+    lastCacheFrameCenter = currentFrameCenter
+    let numOffscreenAssetsToCache = 60
+    
+    // 2. Get all the visible indexes, sorted from top to bottom.
+    var visibleIndexes = collectionView!.indexPathsForVisibleItems() as! [NSIndexPath]
+    visibleIndexes.sort { (a, b) -> Bool in
+      a.item < b.item
+    }
+    if visibleIndexes.count == 0 {
+      return
+    }
+    // 3. Calculate the range of indexes you want to cache.
+    var totalItemCount = selectedAssets.assets.count
+    if let fetchResults = assetsFetchResults {
+      totalItemCount = fetchResults.count
+    }
+    let lastItemToCache = min(totalItemCount, visibleIndexes[visibleIndexes.count - 1].item + numOffscreenAssetsToCache/2)
+    let firstItemToCache = max(0, visibleIndexes[0].item - numOffscreenAssetsToCache/2)
+    
+    // 4. Stop caching items that were previously cached but are now out-of-range
+    
+    // 5. Start caching any new items that have entered the caching range.
+  }
+  
+  func resetCache() {
+    imageManager.stopCachingImagesForAllAssets()
+    cachingIndexes.removeAll(keepCapacity: true)
+    lastCacheFrameCenter = 0
   }
 }
