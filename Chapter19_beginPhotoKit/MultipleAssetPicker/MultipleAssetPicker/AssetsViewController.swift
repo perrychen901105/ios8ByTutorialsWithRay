@@ -41,6 +41,7 @@ class AssetsViewController: UICollectionViewController, UICollectionViewDelegate
   override func viewDidLoad() {
     super.viewDidLoad()
     collectionView!.allowsMultipleSelection = true
+    resetCache()
   }
 
   override func viewWillAppear(animated: Bool)  {
@@ -53,6 +54,7 @@ class AssetsViewController: UICollectionViewController, UICollectionViewDelegate
     
     collectionView!.reloadData()
     updateSelectedItems()
+    resetCache()
   }
   
   override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
@@ -164,6 +166,12 @@ class AssetsViewController: UICollectionViewController, UICollectionViewDelegate
     return CGSize(width: width,height: width)
   }
   
+  override func scrollViewDidScroll(scrollView: UIScrollView) {
+    dispatch_async(cacheQueue, { () -> Void in
+      self.updateCache()
+    })
+  }
+  
   //MARK: Caching
   func updateCache() {
     // 1. Determine whether or not you want to cache
@@ -192,8 +200,41 @@ class AssetsViewController: UICollectionViewController, UICollectionViewDelegate
     let firstItemToCache = max(0, visibleIndexes[0].item - numOffscreenAssetsToCache/2)
     
     // 4. Stop caching items that were previously cached but are now out-of-range
-    
+    let options = PHImageRequestOptions()
+    options.networkAccessAllowed = true
+    // 1. filter again to determine the index paths of the items for which caching needs to be stopped.
+    var indexesToStopCaching: [NSIndexPath] = []
+    cachingIndexes = cachingIndexes.filter { index in
+      if index.item < firstItemToCache || index.item > lastItemToCache {
+        indexesToStopCaching.append(index)
+        return false
+      }
+      return true
+    }
+    // 2
+    imageManager.stopCachingImagesForAssets(assetsAtIndexPaths(indexesToStopCaching), targetSize: assetThumbnailSize, contentMode: .AspectFill, options: options)
     // 5. Start caching any new items that have entered the caching range.
+    // 1
+    // find which assets want to start caching
+    var indexesToStartCaching: [NSIndexPath] = []
+    for i in firstItemToCache..<lastItemToCache {
+      let indexPath = NSIndexPath(forItem: i, inSection: 0)
+      if !contains(cachingIndexes, indexPath) {
+        indexesToStartCaching.append(indexPath)
+      }
+    }
+    cachingIndexes += indexesToStartCaching
+    // 2
+    imageManager.startCachingImagesForAssets(assetsAtIndexPaths(indexesToStartCaching), targetSize: assetThumbnailSize, contentMode: .AspectFill, options: options)
+  }
+  
+  func assetsAtIndexPaths(indexPaths:[NSIndexPath]) -> [PHAsset] {
+    
+    // returns an array of assets corresponding to the index paths passed in
+    return indexPaths.map {
+      indexPath in
+      return self.currentAssetAtIndex(indexPath.item)
+    }
   }
   
   func resetCache() {
