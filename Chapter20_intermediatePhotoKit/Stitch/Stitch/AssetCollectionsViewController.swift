@@ -41,11 +41,13 @@ class AssetCollectionsViewController: UITableViewController, PHPhotoLibraryChang
   
   deinit {
     // Unregister observer
+    PHPhotoLibrary.sharedPhotoLibrary().unregisterChangeObserver(self)
   }
   
   // MARK: UIViewController
   override func viewDidLoad() {
     super.viewDidLoad()
+    PHPhotoLibrary.sharedPhotoLibrary().registerChangeObserver(self)
     if selectedAssets == nil {
       selectedAssets = SelectedAssets()
     }
@@ -202,6 +204,27 @@ class AssetCollectionsViewController: UITableViewController, PHPhotoLibraryChang
   // MARK: PHPhotoLibraryChangeObserver
   func photoLibraryDidChange(changeInstance: PHChange!) {
     // Respond to changes
-    
+    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+      var updatedFetchResults = false
+      // 1
+      // Ask whether or not there are changes in your objects. In this case, your objects are fetch results and not individual asset objects
+      var changeDetails: PHFetchResultChangeDetails? = changeInstance.changeDetailsForFetchResult(self.userAlbums)
+      if let changes = changeDetails {
+        self.userAlbums = changes.fetchResultAfterChanges!
+        updatedFetchResults = true
+      }
+      
+      changeDetails = changeInstance.changeDetailsForFetchResult(self.userFavorites)
+      if let changes = changeDetails {
+        self.userFavorites = changes.fetchResultAfterChanges!
+        updatedFetchResults = true
+      }
+      
+      // 2
+      if updatedFetchResults {
+        self.tableView.reloadData()
+      }
+      
+    })
   }
 }

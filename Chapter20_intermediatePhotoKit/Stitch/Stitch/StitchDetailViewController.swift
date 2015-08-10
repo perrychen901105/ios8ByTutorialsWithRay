@@ -40,6 +40,7 @@ class StitchDetailViewController: UIViewController, PHPhotoLibraryChangeObserver
   
   deinit {
     // Unregister observer
+    PHPhotoLibrary.sharedPhotoLibrary().unregisterChangeObserver(self)
   }
   
   // MARK: UIViewController
@@ -47,6 +48,7 @@ class StitchDetailViewController: UIViewController, PHPhotoLibraryChangeObserver
     super.viewDidLoad()
     
     // Register observer
+    PHPhotoLibrary.sharedPhotoLibrary().registerChangeObserver(self)
   }
   
   override func viewWillAppear(animated: Bool)  {
@@ -55,6 +57,10 @@ class StitchDetailViewController: UIViewController, PHPhotoLibraryChangeObserver
     displayImage()
     
     // Update the interface buttons
+    editButton.enabled = asset.canPerformEditOperation(.Content)
+    favoriteButton.enabled = asset.canPerformEditOperation(.Properties)
+    deleteButton.enabled = asset.canPerformEditOperation(.Delete)
+    updateFavoriteButton()
   }
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
@@ -64,13 +70,32 @@ class StitchDetailViewController: UIViewController, PHPhotoLibraryChangeObserver
       dest.delegate = self
       
       // Set up AssetPickerTableViewController
-      
+      if let assets = stitchAssets {
+        dest.selectedAssets = SelectedAssets(assets: assets)
+      } else {
+        dest.selectedAssets = nil
+      }
     }
   }
   
   // MARK: Private
   private func displayImage() {
     // Load a high quality image to display
+    // 1
+    let scale = UIScreen.mainScreen().scale
+    let targetSize = CGSize(width: CGRectGetWidth(imageView.bounds) * scale, height: CGRectGetHeight(imageView.bounds) * scale)
+    
+    // 2
+    let options = PHImageRequestOptions()
+    options.deliveryMode = .HighQualityFormat
+    options.networkAccessAllowed = true
+    
+    // 3
+    PHImageManager.defaultManager().requestImageForAsset(asset, targetSize: targetSize, contentMode: .AspectFill, options: options) { (result, info) -> Void in
+      if result != nil {
+        self.imageView.image = result
+      }
+    }
   }
   
   private func updateFavoriteButton() {
@@ -83,15 +108,27 @@ class StitchDetailViewController: UIViewController, PHPhotoLibraryChangeObserver
   
   // MARK: Actions
   @IBAction func favoritePressed(sender:AnyObject!) {
-    
+    PHPhotoLibrary.sharedPhotoLibrary().performChanges({ () -> Void in
+      let request = PHAssetChangeRequest(forAsset: self.asset)
+      request.favorite = !self.asset.favorite
+    }, completionHandler: nil)
   }
   
   @IBAction func deletePressed(sender:AnyObject!) {
-    
+    PHPhotoLibrary.sharedPhotoLibrary().performChanges({ () -> Void in
+      PHAssetChangeRequest.deleteAssets([self.asset])
+    }, completionHandler: nil)
   }
   
   @IBAction func editPressed(sender:AnyObject!) {
     // Load the selected stitches then perform the segue to the picker
+    StitchHelper.loadAssetsInStitch(asset, completion: {
+      stitchAssets in
+      self.stitchAssets = stitchAssets
+      dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        self.performSegueWithIdentifier(StitchEditSegueID, sender: self)
+      })
+    })
   }
   
   // MARK: AssetPickerDelegate
@@ -104,11 +141,32 @@ class StitchDetailViewController: UIViewController, PHPhotoLibraryChangeObserver
     dismissViewControllerAnimated(true, completion: nil)
     
     // Update stitch with new assets
+    let stitchImage = StitchHelper.createStitchImageWithAssets(selectedAssets)
+    StitchHelper.editStitchContentWith(self.asset, image: stitchImage, assets: selectedAssets)
   }
   
   
   // MARK: PHPhotoLibraryChangeObserver
   func photoLibraryDidChange(changeInstance: PHChange!)  {
     // Respond to changes
+    // 1
+    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+      // 2
+      // check if the change details exist for your object
+      if let changeDetails = changeInstance.changeDetailsForObject(self.asset) {
+        // 3
+        if changeDetails.objectWasDeleted {
+          self.navigationController?.popViewControllerAnimated(true)
+          return
+        }
+        // 4
+        // update asset by assigning it to objectAfterChanges, from the change detail
+        self.asset = changeDetails.objectAfterChanges as! PHAsset
+        if changeDetails.assetContentChanged {
+          self.displayImage()
+        }
+        self.updateFavoriteButton()
+      }
+    })
   }
 }

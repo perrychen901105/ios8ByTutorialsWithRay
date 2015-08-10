@@ -39,11 +39,13 @@ class AssetsViewController: UICollectionViewController, UICollectionViewDelegate
   
   deinit {
     // Unregister observer
+    PHPhotoLibrary.sharedPhotoLibrary().unregisterChangeObserver(self)
   }
   
   // MARK: UIViewController
   override func viewDidLoad() {
     super.viewDidLoad()
+    PHPhotoLibrary.sharedPhotoLibrary().registerChangeObserver(self)
     collectionView!.allowsMultipleSelection = true
     resetCache()
     
@@ -258,6 +260,30 @@ class AssetsViewController: UICollectionViewController, UICollectionViewDelegate
   // MARK: PHPhotoLibraryChangeObserver
   func photoLibraryDidChange(changeInstance: PHChange!)  {
     // Respond to changes
+    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+      if let collectionChanges = changeInstance.changeDetailsForFetchResult(self.assetsFetchResults) {
+        self.assetsFetchResults = collectionChanges.fetchResultAfterChanges
+        if collectionChanges.hasMoves || !collectionChanges.hasIncrementalChanges {
+          self.collectionView!.reloadData()
+        } else {
+          // perform incremental updates
+          self.collectionView!.performBatchUpdates({ () -> Void in
+            let removedIndexes = collectionChanges.removedIndexes
+            if removedIndexes?.count > 0 {
+              self.collectionView!.deleteItemsAtIndexPaths(self.indexPathsFromIndexSet(removedIndexes!, section: 0))
+            }
+            let insertedIndexes = collectionChanges.insertedIndexes
+            if insertedIndexes?.count > 0 {
+              self.collectionView!.insertItemsAtIndexPaths(self.indexPathsFromIndexSet(insertedIndexes!, section: 0))
+            }
+            let changedIndexes = collectionChanges.changedIndexes
+            if changedIndexes?.count > 0 {
+              self.collectionView!.reloadItemsAtIndexPaths(self.indexPathsFromIndexSet(changedIndexes!, section: 0))
+            }
+            }, completion: nil)
+        }
+      }
+    })
   }
   
   func indexPathsFromIndexSet(indexSet:NSIndexSet, section:Int) -> [NSIndexPath] {

@@ -42,6 +42,7 @@ class StitchesViewController: UIViewController, PHPhotoLibraryChangeObserver, As
   
   deinit {
     // Unregister observer
+    PHPhotoLibrary.sharedPhotoLibrary().unregisterChangeObserver(self)
   }
   
   // MARK: UIViewController
@@ -54,6 +55,7 @@ class StitchesViewController: UIViewController, PHPhotoLibraryChangeObserver, As
         // check status
         switch status {
         case .Authorized:
+          PHPhotoLibrary.sharedPhotoLibrary().registerChangeObserver(self)
           // Fetch stitches album
           // 1 Make use of the predicate property on PHFetchOptions to filter the results for just collections where the title equals Stitches
           let options = PHFetchOptions()
@@ -160,6 +162,10 @@ class StitchesViewController: UIViewController, PHPhotoLibraryChangeObserver, As
     dismissViewControllerAnimated(true, completion: nil)
     
     // Create new Stitch
+    if selectedAssets.count > 0 {
+      // Create new Stitch
+      StitchHelper.createNewStitchWith(selectedAssets, inCollection: stitchesCollection)
+    }
   }
   
   // MARK: UICollectionViewDataSource
@@ -204,6 +210,30 @@ class StitchesViewController: UIViewController, PHPhotoLibraryChangeObserver, As
   // MARK: PHPhotoLibraryChangeObserver
   func photoLibraryDidChange(changeInstance: PHChange!)  {
     // Respond to changes
+    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+      if let collectionChanges = changeInstance.changeDetailsForFetchResult(self.stitches) {
+        self.stitches = collectionChanges.fetchResultAfterChanges
+        if collectionChanges.hasMoves || !collectionChanges.hasIncrementalChanges {
+          self.collectionView.reloadData()
+        } else {
+          // perform incremental updates
+          self.collectionView.performBatchUpdates({ () -> Void in
+            let removedIndexes = collectionChanges.removedIndexes
+            if removedIndexes?.count > 0 {
+              self.collectionView.deleteItemsAtIndexPaths(self.indexPathsFromIndexSet(removedIndexes!, section: 0))
+            }
+            let insertedIndexes = collectionChanges.insertedIndexes
+            if insertedIndexes?.count > 0 {
+              self.collectionView.insertItemsAtIndexPaths(self.indexPathsFromIndexSet(insertedIndexes!, section: 0))
+            }
+            let changedIndexes = collectionChanges.changedIndexes
+            if changedIndexes?.count > 0 {
+              self.collectionView.reloadItemsAtIndexPaths(self.indexPathsFromIndexSet(changedIndexes!, section: 0))
+            }
+          }, completion: nil)
+        }
+      }
+    })
   }
   
   // Create an array of index paths from an index set

@@ -34,16 +34,86 @@ class StitchHelper: NSObject {
   
   // MARK: Stitch Creation
   class func createNewStitchWith(assets: [PHAsset], inCollection collection: PHAssetCollection) {
+    // Create a new asset for the new stitch
+    // 1
+    // Use the helper method to create the actual stitch image
+    let stitchImage = self.createStitchImageWithAssets(assets)
     
+    // 2
+    // Declare a variable to keep track of the placeholder object, and then begin a photos library change block
+    var stitchPlaceholder: PHObjectPlaceholder!
+    PHPhotoLibrary.sharedPhotoLibrary().performChanges({ () -> Void in
+      // 3
+      // Create a PHAssetChangeRequest for your new stitch and grab the placeholder object
+      let assetChangeRequest = PHAssetChangeRequest.creationRequestForAssetFromImage(stitchImage)
+      stitchPlaceholder = assetChangeRequest.placeholderForCreatedAsset
+      
+      // 4
+      // add the new stitch asset tot your Stitches album by first creating a PHAssetCollectionChangeRequest and then adding the placeholder object
+      let assetCollectionChangeRequest = PHAssetCollectionChangeRequest(forAssetCollection: collection, assets: nil)
+      assetCollectionChangeRequest.addAssets([stitchPlaceholder])
+    }, completionHandler: { (_, _) -> Void in
+      // Fetch the asset and add modification data to it
+      let fetchResult = PHAsset.fetchAssetsWithLocalIdentifiers([stitchPlaceholder.localIdentifier], options: nil)
+      let stitchAsset = fetchResult[0] as! PHAsset
+      
+      self.editStitchContentWith(stitchAsset, image: stitchImage, assets: assets)
+    })
   }
   
   // MARK: Stitch Content
   class func editStitchContentWith(stitch: PHAsset, image: UIImage, assets: [PHAsset]) {
-    
+    // Update the stitch with the new assets
+    // 1
+    let stitchJPEG = UIImageJPEGRepresentation(image, 0.9)
+    let assetIDs = assets.map { asset in
+      (asset as PHAsset).localIdentifier
+    }
+    let assetsData = NSKeyedArchiver.archivedDataWithRootObject(assetIDs)
+    // 2
+    stitch.requestContentEditingInputWithOptions(nil, completionHandler: { (contentEditingInput, _) -> Void in
+      // 3
+      let adjustmentData = PHAdjustmentData(formatIdentifier: StitchAdjustmentFormatIdentifier, formatVersion: "1.0", data: assetsData)
+      // 4
+      // Create a PHContentEditingOutput. holds the output of the edit
+      let contentEditingOutput = PHContentEditingOutput(contentEditingInput: contentEditingInput)
+      stitchJPEG.writeToURL(contentEditingOutput.renderedContentURL, atomically: true)
+      contentEditingOutput.adjustmentData = adjustmentData
+      // 5
+      PHPhotoLibrary.sharedPhotoLibrary().performChanges({ () -> Void in
+        let request = PHAssetChangeRequest(forAsset: stitch)
+        request.contentEditingOutput = contentEditingOutput
+      }, completionHandler: nil)
+    })
   }
   
   class func loadAssetsInStitch(stitch: PHAsset, completion: [PHAsset] -> ()) {
+    // 1
+    // tell the phots framework what adjustment data format you support by setting the property
+    let options = PHContentEditingInputRequestOptions()
+    options.canHandleAdjustmentData = { adjustmentData in
+      (adjustmentData.formatIdentifier == StitchAdjustmentFormatIdentifier) && (adjustmentData.formatVersion == "1.0")
+    }
     
+    // 2
+    // if can handle the adjustment data format, the Photos framework provides you with the original image along with the adjustment data.
+    stitch.requestContentEditingInputWithOptions(options, completionHandler: { (contentEditingInput, _) -> Void in
+      if let adjustmentData = contentEditingInput.adjustmentData {
+        // 3
+        let stitchAssetsID = NSKeyedUnarchiver.unarchiveObjectWithData(adjustmentData.data) as! [String]
+        let stitchAssetsFetchResult = PHAsset.fetchAssetsWithLocalIdentifiers(stitchAssetsID, options: nil)
+        // 4
+        var stitchAssets: [PHAsset] = []
+        stitchAssetsFetchResult.enumerateObjectsUsingBlock {
+          obj, _, _ in
+          stitchAssets.append(obj as! PHAsset)
+        }
+        completion(stitchAssets)
+      } else {
+        // 5
+        completion([])
+      }
+    })
   }
   
   // MARK: Stitch Image Creation
