@@ -5,16 +5,16 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>4E8305F6-8C97-4D0B-9BC5-ED9F4964EDB3</string>
+	<string>0DF6BE64-35EF-4CEA-9686-03060A403B64</string>
 	<key>IDESourceControlProjectName</key>
-	<string>Stitch</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>EDAEE0B7F0B54BA65717C207A241C3DCEC5D2C11</key>
 		<string>https://github.com/perrychen901105/ios8ByTutorialsWithRay.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Chapter20_intermediatePhotoKit/Stitch/Stitch.xcodeproj</string>
+	<string>Chapter21_beginWebKit/EyeBrowser/EyeBrowser.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>EDAEE0B7F0B54BA65717C207A241C3DCEC5D2C11</key>
