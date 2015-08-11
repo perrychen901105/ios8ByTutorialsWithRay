@@ -121,14 +121,13 @@ class ViewController: UIViewController, UITextFieldDelegate, WKNavigationDelegat
     
     func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
         println("Request \(navigationAction.request)")
-        // the action is initiated by a tap and is not raywenderlich.com
-        if ((navigationAction.navigationType == .LinkActivated) && (!navigationAction.request.URL?.host?.lowercaseString.hasPrefix("www.raywenderlich.com"))) {
-//            if (navigationAction.navigationType == .LinkActivated && !navigationAction.request.URL?.host?.lowercaseString.hasPrefix("www.raywenderlich.com")) {
-            UIApplication.sharedApplication().openURL(navigationAction.request.URL!)
+        if (navigationAction.navigationType == .LinkActivated && navigationAction.request.URL?.host?.lowercaseString.hasPrefix("www.raywenderlich.com") != nil) {
+            UIApplication.sharedApplication().openURL(navigationAction.request.URL!);
             decisionHandler(.Cancel)
         } else {
             decisionHandler(.Allow)
         }
+
     }
     
     override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
