@@ -85,6 +85,20 @@ class StoryViewController: UIViewController, ThemeAdopting {
     }
   }
   
+  func updateBlur() {
+    // 1
+    optionsContainerView.hidden = true
+    
+    // 2
+    UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, true, 1)
+    
+    // 3
+    self.view.drawViewHierarchyInRect(self.view.bounds, afterScreenUpdates: true)
+    // 4
+    let screenshot = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+  }
+  
   func themeDidChange(notification: NSNotification!) {
     reloadTheme()
     storyView.reloadTheme()
