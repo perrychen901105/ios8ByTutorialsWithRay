@@ -38,6 +38,14 @@ class OptionsController: UIViewController, UIScrollViewDelegate {
     view.addSubview(optionsView)
     
     // blur here, you will
+    // 1
+    let blurEffect = UIBlurEffect(style: .Dark)
+    // 2
+    // create a UIVisualEffectView and tell it which effect to use.
+    let blurView = UIVisualEffectView(effect: blurEffect)
+    // 3
+    blurView.setTranslatesAutoresizingMaskIntoConstraints(false)
+    view.insertSubview(blurView, atIndex: 0)
     
     var constraints = [NSLayoutConstraint]()
     
@@ -46,6 +54,27 @@ class OptionsController: UIViewController, UIScrollViewDelegate {
     
     constraints.append(NSLayoutConstraint(item: view, attribute: .CenterY, relatedBy: .Equal,
       toItem: optionsView, attribute: .CenterY, multiplier: 1, constant: 0))
+    
+    constraints.append(NSLayoutConstraint(item: blurView, attribute: .Height, relatedBy: .Equal, toItem: view, attribute: .Height, multiplier: 1, constant: 0))
+    
+    constraints.append(NSLayoutConstraint(item: blurView, attribute: .Width, relatedBy: .Equal, toItem: view, attribute: .Width, multiplier: 1, constant: 0))
+    
+    // 1
+    // Create a UIVibrancyEffect that uses the blurEffect you set up earlier. UIVibrancyEffect is another subclass of UIVisualEffect.
+    let vibrancyEffect = UIVibrancyEffect(forBlurEffect: blurEffect)
+    // 2
+    // Create a UIVisualEffectView to contain the vibrancy effect. This process is exactly the same as creating a blur.
+    let vibrancyView = UIVisualEffectView(effect: vibrancyEffect)
+    vibrancyView.setTranslatesAutoresizingMaskIntoConstraints(false)
+    // 3
+    // Add the optionsView to your vibrancy view's contentView property; this ensures the vibrancy effect will be applied to the view that contains all the controls
+    vibrancyView.contentView.addSubview(optionsView)
+    // 4
+    // Finally add the vibrancy view to the blur view's contentView to complete the effect
+    blurView.contentView.addSubview(vibrancyView)
+    
+    constraints.append(NSLayoutConstraint(item: vibrancyView, attribute: .Height, relatedBy: .Equal, toItem: view, attribute: .Height, multiplier: 1, constant: 0))
+    constraints.append(NSLayoutConstraint(item: vibrancyView, attribute: .Width, relatedBy: .Equal, toItem: view, attribute: .Width, multiplier: 1, constant: 0))
     
     view.addConstraints(constraints)
   }

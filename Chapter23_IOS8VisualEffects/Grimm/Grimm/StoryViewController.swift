@@ -32,6 +32,8 @@ class StoryViewController: UIViewController, ThemeAdopting {
   
   var story: Story?
   
+  var blurView = UIImageView()
+  
   required init(coder aDecoder: NSCoder)  {
     super.init(coder: aDecoder)
     NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("themeDidChange:"),
@@ -52,6 +54,8 @@ class StoryViewController: UIViewController, ThemeAdopting {
     if story != nil {
       storyView.story = story
     }
+    
+//    optionsContainerView.subviews[0].insertSubview(blurView, atIndex: 0)
   }
   
   override func viewWillAppear(animated: Bool) {
@@ -64,6 +68,9 @@ class StoryViewController: UIViewController, ThemeAdopting {
   }
   
   private func setOptionsHidden(hidden: Bool, animated: Bool) {
+    if !hidden {
+//      updateBlur()
+    }
     showingOptions = !hidden;
     let height = CGRectGetHeight(optionsContainerView.bounds)
     var constant = optionsContainerViewBottomConstraint.constant
@@ -87,16 +94,28 @@ class StoryViewController: UIViewController, ThemeAdopting {
   
   func updateBlur() {
     // 1
+    // make sure that they are hidden before you take the screenshot
     optionsContainerView.hidden = true
     
     // 2
+    // In order to draw a screenshot you need to create a new image context.
     UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, true, 1)
     
     // 3
+    // Draw the story view into the image context.Since hidden the optionsContainerView, you will need to wait for screen updates before capturing a screenshot.
     self.view.drawViewHierarchyInRect(self.view.bounds, afterScreenUpdates: true)
     // 4
+    // Pull a UIImage from the image context, and then perform some clean up.
     let screenshot = UIGraphicsGetImageFromCurrentImageContext()
+    
     UIGraphicsEndImageContext()
+    
+    let blur = screenshot.applyLightEffect()
+    
+    blurView.frame = optionsContainerView.bounds
+    blurView.image = blur
+    blurView.contentMode = .Bottom
+    optionsContainerView.hidden = false
   }
   
   func themeDidChange(notification: NSNotification!) {
@@ -112,6 +131,14 @@ class StoryViewController: UIViewController, ThemeAdopting {
         controller.view.tintColor = theme.tintColor
       }
     }
+  }
+  
+  override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+    // 1
+    coordinator.animateAlongsideTransition(nil, completion: { (context) -> Void in
+      // 2
+      self.updateBlur()
+    })
   }
   
 }
