@@ -44,7 +44,7 @@ class WatchView: UIView {
         } // 2 exposes the backgroundLayer's color attribute. lets you change the color of the background from within the Attribute Inspector.
     }
     
-    @IBInspectable var lineWidth: CGFloat = 1.0 // 3 expose the line width property
+   @IBInspectable var lineWidth: CGFloat = 1.0 // 3 expose the line width property
     
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -100,17 +100,23 @@ class WatchView: UIView {
         // Check to see if the backgroundLayer has already been created.
         backgroundLayer = CAShapeLayer()
         // 2
+        // If the background layer does not exist, the code allocates memory for a CAShapeLayer object
         layer.addSublayer(backgroundLayer)
         // 3
+        // add the backgroundLayer to the view's sublayer.
         let rect = CGRectInset(bounds, lineWidth / 2.0, lineWidth / 2.0)
         // 4
+        // create a CGRect variable with insets; ensures your circle won't clip the view
         let path = UIBezierPath(ovalInRect: rect) // 5
-        
+        // Create a curcular UIBezierPath
         backgroundLayer.path = path.CGPath // 6
+        // Apply the circular path to the backgroundLayer's path, so the background layer is now circular instead of rectangular
         backgroundLayer.fillColor = backgroundLayerColor.CGColor // 7
+        // will reflected in the object in IB
         backgroundLayer.lineWidth = lineWidth // 8
     }
     backgroundLayer.frame = layer.bounds // 9
+    // ensures the layer's frame always within the super view's layer's bounds
   }
 
   //Creates the background image layer
@@ -141,6 +147,9 @@ class WatchView: UIView {
   //MARK: didSet Property Observers
   func updateLayerProperties() {
     //TODO: Implement
+    if backgroundLayer != nil {
+        backgroundLayer.fillColor = backgroundLayerColor.CGColor
+    }
   }
 
   //MARK: Hide components of the watch
