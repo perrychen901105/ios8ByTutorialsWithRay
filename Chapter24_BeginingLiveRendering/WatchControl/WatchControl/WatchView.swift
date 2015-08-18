@@ -23,16 +23,29 @@
 import UIKit
 import QuartzCore
 
-
+@IBDesignable
 class WatchView: UIView {
-  var enableClockSecondHand: Bool = false {
-  didSet { updateLayerProperties() }
+    
+
+    
+  @IBInspectable var enableClockSecondHand: Bool = false {
+  didSet { updateLayerProperties() } // 1 toggles between seconds displayed as a ring or as a second hand.
   }
 
-  var enableColorBackground: Bool = false {
-    didSet { updateLayerProperties() }
+  @IBInspectable var enableColorBackground: Bool = false {
+    didSet { updateLayerProperties() } // 2 toggles between a colored background and an image background.
   }
 
+    // Base color background layer
+    var backgroundLayer: CAShapeLayer! // 1 the base layer of your watch; as a CAShapeLayer
+    @IBInspectable var backgroundLayerColor: UIColor = UIColor.darkGrayColor() {
+        didSet {
+            updateLayerProperties()
+        } // 2 exposes the backgroundLayer's color attribute. lets you change the color of the background from within the Attribute Inspector.
+    }
+    
+    @IBInspectable var lineWidth: CGFloat = 1.0 // 3 expose the line width property
+    
   override init(frame: CGRect) {
     super.init(frame: frame)
     commonInit()
@@ -82,6 +95,22 @@ class WatchView: UIView {
   //The base circular layer.
   func layoutBackgroundLayer() {
     //TODO: Implement
+    if backgroundLayer == nil {
+        // 1
+        // Check to see if the backgroundLayer has already been created.
+        backgroundLayer = CAShapeLayer()
+        // 2
+        layer.addSublayer(backgroundLayer)
+        // 3
+        let rect = CGRectInset(bounds, lineWidth / 2.0, lineWidth / 2.0)
+        // 4
+        let path = UIBezierPath(ovalInRect: rect) // 5
+        
+        backgroundLayer.path = path.CGPath // 6
+        backgroundLayer.fillColor = backgroundLayerColor.CGColor // 7
+        backgroundLayer.lineWidth = lineWidth // 8
+    }
+    backgroundLayer.frame = layer.bounds // 9
   }
 
   //Creates the background image layer
