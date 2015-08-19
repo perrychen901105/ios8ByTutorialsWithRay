@@ -44,6 +44,34 @@ class WatchView: UIView {
         } // 2 exposes the backgroundLayer's color attribute. lets you change the color of the background from within the Attribute Inspector.
     }
     
+    var backgroundImageLayer: CALayer!
+    @IBInspectable var backgroundImage: UIImage? {
+        didSet { updateLayerProperties() }
+    }
+    
+    var ringLayer: CAShapeLayer! // 1
+    // Declares a ringLayer to be a CAShapeLayer object. The ring layer is a circular progress-type indicator to keep track of seconds
+    @IBInspectable var ringThickness: CGFloat = 2.0 // 2
+    // ringThickness controls the thickness of the ring. ringProgress keeps track of the indicator's location on the circular path.
+    @IBInspectable var ringColor: UIColor = UIColor.blueColor()
+    @IBInspectable var ringProgress: CGFloat = 45.0/60 {
+        didSet {
+            updateLayerProperties() // 3
+        }
+    }
+    
+    // Watch second 'hand'
+    var secondHandLayer: CAShapeLayer!
+    @IBInspectable var secondHandColor: UIColor = UIColor.redColor()
+    
+    // Watch minute 'hand'
+    var minuteHandLayer: CAShapeLayer!
+    @IBInspectable var minuteHandColor: UIColor = UIColor.whiteColor()
+    
+    // Watch hour 'hand'
+    var hourHandLayer: CAShapeLayer!
+    @IBInspectable var hourHandColor: UIColor = UIColor.whiteColor()
+    
    @IBInspectable var lineWidth: CGFloat = 1.0 // 3 expose the line width property
     
   override init(frame: CGRect) {
@@ -122,26 +150,86 @@ class WatchView: UIView {
   //Creates the background image layer
   func layoutBackgroundImageLayer() {
     //TODO: Implement
+    if backgroundImageLayer == nil {
+        let maskLayer = CAShapeLayer() // 1
+        let dx = lineWidth + 3.0
+        let insetBounds = CGRectInset(self.bounds, dx, dx)
+        let innerPath = UIBezierPath(ovalInRect: insetBounds)
+        maskLayer.path = innerPath.CGPath
+        maskLayer.fillColor = UIColor.blackColor().CGColor
+        maskLayer.frame = self.bounds
+        
+        backgroundImageLayer = CAShapeLayer()
+        backgroundImageLayer.mask = maskLayer // 2
+        // make the layer to circle
+        backgroundImageLayer.frame = self.bounds
+        backgroundImageLayer.contentsGravity = kCAGravityResizeAspectFill
+        layer.addSublayer(backgroundImageLayer)
+        
+        
+    }
   }
 
   //MARK: Analog Watch Layering
   //Creates the watch's seconds indicator in a cirular form.
   func layoutWatchRingLayer() {
     //TODO: Implement
+    // 1 
+    // Checks to see if the ring progress is equal to zero. If so, sets the ringLayer's stroke to zero. This animates the stroke of the circular layer counter-clockwise all the way back to the 12 o'clock mark.
+    if ringProgress == 0 {
+        if ringLayer != nil {
+            ringLayer.strokeEnd = 0.0
+        }
+    }
+    // 2
+    // Checks to see if a layer already exists. If it doesn't exist, it creates a circular CAShapeLayer.
+    if ringLayer == nil {
+        ringLayer = CAShapeLayer()
+        layer.addSublayer(ringLayer)
+        let dx = ringThickness / 2.0
+        let rect = CGRectInset(bounds, dx, dx)
+        let path = UIBezierPath(ovalInRect: rect)
+        // 3
+        // This transforms the layer so the starting position will be at the 12 o'clock mark instead of the 3 o'clock mark
+        ringLayer.transform = CATransform3DMakeRotation(CGFloat(-(M_PI/2)), 0, 0, 1)
+        ringLayer.strokeColor = ringColor.CGColor
+        ringLayer.path = path.CGPath
+        ringLayer.fillColor = nil
+        ringLayer.lineWidth = ringThickness
+        ringLayer.strokeStart = 0.0
+    }
+    // 4
+    // kicks off the animation. Since strokeEnd is an animation property, changing its value causes CAShapeLayer to animate the progress indicator
+    ringLayer.strokeEnd = ringProgress / 60.0
+    ringLayer.frame = layer.bounds
   }
 
   //Creates the second hand layer
   func layoutSecondHandLayer() {
     //TODO: Implement
+    if secondHandLayer == nil {
+        secondHandLayer = createClockHand(CGPointMake(0.5, 1.0), handLength: 20.0, handWidth: 4.0, handAlpha: 1.0, handColor: secondHandColor)
+        layer.addSublayer(secondHandLayer)
+    }
   }
 
   //Creates the minute hand layer
   func layoutMinuteHandLayer() {
     //TODO: Implement
+    if minuteHandLayer == nil {
+        minuteHandLayer = createClockHand(CGPointMake(0.5, 1.0), handLength: 26.0, handWidth: 7.0, handAlpha: 1.0, handColor: minuteHandColor)
+        layer.addSublayer(minuteHandLayer)
+    }
   }
+    
+    // Create the hour hand layer
 
   func layoutHourHandLayer() {
     //TODO: Implement
+    if hourHandLayer == nil {
+        hourHandLayer = createClockHand(CGPointMake(0.5, 1.0), handLength: 52.0, handWidth: 7.0, handAlpha: 1.0, handColor: hourHandColor)
+        layer.addSublayer(hourHandLayer)
+    }
   }
 
   //MARK: didSet Property Observers
@@ -149,6 +237,18 @@ class WatchView: UIView {
     //TODO: Implement
     if backgroundLayer != nil {
         backgroundLayer.fillColor = backgroundLayerColor.CGColor
+    }
+    
+    // update the image layer.
+    if backgroundImageLayer != nil {
+        if let image = backgroundImage {
+            backgroundImageLayer.contents = image.CGImage
+        }
+    }
+    
+    // update the ring layer.
+    if ringLayer != nil {
+        ringLayer.strokeEnd = ringProgress / 60.0
     }
   }
 
@@ -167,7 +267,24 @@ class WatchView: UIView {
 
   //MARK: Helper Methods
   //Insert here
-
+    // Helper function that creates clock hands of different length and sizes or what not!
+    func createClockHand(anchorPoint: CGPoint, handLength: CGFloat, handWidth: CGFloat, handAlpha: CGFloat, handColor: UIColor) -> CAShapeLayer {
+        let handLayer = CAShapeLayer()
+        let path = UIBezierPath()
+        //creates two points (one at the center of the clock face, and the other at handLength distance from that point) and draws a line between them.
+        path.moveToPoint(CGPointMake(1.0, handLength))
+        path.addLineToPoint(CGPointMake(1.0, bounds.size.height / 2.0))
+        handLayer.bounds = CGRectMake(0.0, 0.0, 1.0, bounds.size.height / 2.0)
+        handLayer.anchorPoint = anchorPoint
+        handLayer.position = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds))
+        handLayer.lineWidth = handWidth
+        handLayer.opacity = Float(handAlpha)
+        handLayer.strokeColor = handColor.CGColor
+        handLayer.path = path.CGPath
+        handLayer.lineCap = kCALineCapRound
+        return handLayer
+    }
+    
   //MARK: Starting and stoping time
   func startTimeWithTimeZone(timezone: String) {
     //TODO: Implement
