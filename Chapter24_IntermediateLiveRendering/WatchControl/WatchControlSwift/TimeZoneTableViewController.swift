@@ -22,18 +22,45 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-    @IBOutlet weak var watchView: WatchView!
-                            
+class TimeZoneTableViewController: UITableViewController {
+	
+  var delegate: TimeZoneTableViewControllerDelegate?
+  var timezoneNames : [AnyObject]!
+
   override func viewDidLoad() {
     super.viewDidLoad()
-    watchView.startTimeWithTimeZone("Asiz/Singapore")
-    // Do any additional setup after loading the view, typically from a nib.
+    timezoneNames = NSTimeZone.knownTimeZoneNames()
+    title = "Timezone"
   }
 
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.
   }
-}
 
+  // #pragma mark - Table view data source
+  override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    return 1
+  }
+
+  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    // Return the number of rows in the section.
+    return timezoneNames.count
+  }
+
+  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    let cell: TimezoneTableViewCell = tableView.dequeueReusableCellWithIdentifier("timeZoneCell", forIndexPath: indexPath) as! TimezoneTableViewCell
+    let timezoneString: AnyObject = timezoneNames[indexPath.row]
+    if let string = timezoneString as? String {
+      cell.timeZoneLabel.text = string
+    }
+    return cell
+  }
+
+  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    let timeZoneTapped: AnyObject = timezoneNames[indexPath.row]
+    if let string = timeZoneTapped as? String {
+      delegate?.didSelectATimeZone(string)
+    }
+  }
+}

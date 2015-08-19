@@ -22,13 +22,21 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-    @IBOutlet weak var watchView: WatchView!
-                            
+class ColorPickerViewController: UIViewController {
+	
+  @IBOutlet var colorPickerView: NKOColorPickerView!
+  @IBOutlet var selectedColorView: UIView!
+
+  var delegate: ColorPickerViewControllerDelegate?
+
   override func viewDidLoad() {
     super.viewDidLoad()
-    watchView.startTimeWithTimeZone("Asiz/Singapore")
-    // Do any additional setup after loading the view, typically from a nib.
+    title = "Select Color"
+    colorPickerView.didChangeColorBlock = {
+                        (color: UIColor!) in
+                        self.selectedColorView.backgroundColor = color
+                        self.delegate?.didSelectColor(color)
+    }
   }
 
   override func didReceiveMemoryWarning() {
@@ -36,4 +44,3 @@ class ViewController: UIViewController {
     // Dispose of any resources that can be recreated.
   }
 }
-

@@ -22,18 +22,13 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-    @IBOutlet weak var watchView: WatchView!
-                            
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    watchView.startTimeWithTimeZone("Asiz/Singapore")
-    // Do any additional setup after loading the view, typically from a nib.
-  }
+@IBDesignable
+class BorderedButton: UIButton {
 
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
-  }
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		layer.borderWidth = 1.0
+		layer.borderColor = UIColor(red: 89/255.0, green: 186/255.0, blue: 255.0/255.0, alpha: 1.0).CGColor
+		layer.cornerRadius = 5.0
+	}
 }
-

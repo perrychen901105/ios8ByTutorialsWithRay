@@ -22,18 +22,19 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-    @IBOutlet weak var watchView: WatchView!
-                            
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    watchView.startTimeWithTimeZone("Asiz/Singapore")
-    // Do any additional setup after loading the view, typically from a nib.
+class WatchCollectionViewCell: UICollectionViewCell {
+  @IBOutlet var watchView: WatchView!
+
+  @IBOutlet var timezoneLabel: UILabel!
+  override init(frame: CGRect) {
+    super.init(frame: frame)
   }
 
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
+  override func awakeFromNib() {
+    super.awakeFromNib()
+  }
+
+  required init(coder aDecoder: NSCoder) {
+    super.init(coder: aDecoder)
   }
 }
-

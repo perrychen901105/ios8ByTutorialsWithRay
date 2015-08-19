@@ -22,18 +22,23 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-    @IBOutlet weak var watchView: WatchView!
-                            
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    watchView.startTimeWithTimeZone("Asiz/Singapore")
-    // Do any additional setup after loading the view, typically from a nib.
+class TimezoneTableViewCell: UITableViewCell {
+	
+  @IBOutlet var timeZoneLabel: UILabel!
+  
+  override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    super.init(style: style, reuseIdentifier: reuseIdentifier)
   }
 
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
+  override func awakeFromNib() {
+    super.awakeFromNib()
+  }
+
+  override func setSelected(selected: Bool, animated: Bool) {
+    super.setSelected(selected, animated: animated)
+  }
+
+  required init(coder aDecoder: NSCoder) {
+    super.init(coder: aDecoder)
   }
 }
-

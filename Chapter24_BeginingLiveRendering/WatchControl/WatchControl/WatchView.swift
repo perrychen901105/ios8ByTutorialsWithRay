@@ -74,6 +74,9 @@ class WatchView: UIView {
     
    @IBInspectable var lineWidth: CGFloat = 1.0 // 3 expose the line width property
     
+    var timer = NSTimer()
+    var currentTimeZone: String = "Asiz/Singapore"
+    
   override init(frame: CGRect) {
     super.init(frame: frame)
     commonInit()
@@ -250,19 +253,47 @@ class WatchView: UIView {
     if ringLayer != nil {
         ringLayer.strokeEnd = ringProgress / 60.0
     }
+    
+    // If user toggles between second hand and ring progress indicator
+    if enableClockSecondHand == true {
+        setHideSecondClockHand(false)
+        setHideRingLayer(true)
+    } else if enableClockSecondHand == false {
+        setHideSecondClockHand(true)
+        setHideRingLayer(false)
+    } else {
+        setHideRingLayer(true)
+        setHideSecondClockHand(true)
+    }
+    
+    // Handles toggling between color background and image background
+    if enableColorBackground == true {
+        setHideImageBackground(true)
+    } else {
+        setHideImageBackground(false)
+    }
   }
 
   //MARK: Hide components of the watch
   func setHideImageBackground(willHide: Bool) {
     //TODO: Implement
+    if backgroundImageLayer != nil {
+        backgroundImageLayer.hidden = willHide
+    }
   }
 
   func setHideSecondClockHand(willHide: Bool) {
     //TODO: Implement
+    if secondHandLayer != nil {
+        secondHandLayer.hidden = willHide
+    }
   }
 
   func setHideRingLayer(willHide: Bool) {
     //TODO: Implement
+    if ringLayer != nil {
+        ringLayer.hidden = willHide
+    }
   }
 
   //MARK: Helper Methods
@@ -288,16 +319,66 @@ class WatchView: UIView {
   //MARK: Starting and stoping time
   func startTimeWithTimeZone(timezone: String) {
     //TODO: Implement
+    endTime()       // 1 ends the previous time in case anything is running
+    currentTimeZone = timezone  // 2 Sets the time zone to the passed-in time zone
+    // 3
+    // Starts a timer to perform animations related to analog design components.
+    timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "animateAnalogClock", userInfo: nil, repeats: true)
   }
 
   func endTime() {
     //TODO: Implement
+    timer.invalidate()
   }
 
   //MARK: Methods to make watch tick
+    func grabDateComponents(dateString: String) -> [String] {
+        let dateArray = dateString.componentsSeparatedByString(":")
+        return dateArray
+    }
   //The stuff that makes the clock just tick
   func animateAnalogClock() {
     //TODO: Implement
+    // Get today's time
+    let now = NSDate()
+    // Create a date formatter. and set the time zone selected by the user
+    // 2
+    
+    let dateFormatter = NSDateFormatter()
+    dateFormatter.timeZone = NSTimeZone(name: currentTimeZone)
+    dateFormatter.dateFormat = "hh:mm:ss"
+    
+    // Extract the hour, minute, and second from the date string
+    let dateComponents = grabDateComponents(dateFormatter.stringFromDate(now))
+    // 6
+    let hours = dateComponents[0].toInt()
+    let minutes = dateComponents[1].toInt()
+    let seconds = dateComponents[2].toInt()
+    // Calculate percentage to rotate clock hands by.
+    let minutesIntoDay = CGFloat(hours!) * 60 + CGFloat(minutes!)
+    let pminutesIntoDay = CGFloat(minutesIntoDay) / (12.0 * 60.0)
+    let minutesIntoHour = CGFloat(minutes!) / 60.0
+    let secondsIntoMinute = CGFloat(seconds!) / 60.0
+    
+    // 8
+    if enableClockSecondHand == true {
+        if secondHandLayer != nil {
+            secondHandLayer.transform = CATransform3DMakeRotation(CGFloat(M_PI * 2.0) * secondsIntoMinute , 0, 0, 1)
+        }
+    } else {
+        // 9 
+        if ringLayer != nil {
+            ringProgress = CGFloat(seconds!)
+        }
+    }
+    // 10
+    if minuteHandLayer != nil {
+        minuteHandLayer.transform = CATransform3DMakeRotation(CGFloat(M_PI * 2), 0, 0, 1)
+    }
+    // 11
+    if hourHandLayer != nil {
+        hourHandLayer.transform = CATransform3DMakeRotation(CGFloat(M_PI * 2) * pminutesIntoDay, 0, 0, 1)
+    }
   }
 }
 
