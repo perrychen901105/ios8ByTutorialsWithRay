@@ -26,6 +26,8 @@ import QuartzCore
 @IBDesignable
 class WatchView: UIView {
   
+    //
+    
   @IBInspectable var enableClockSecondHand: Bool = false {
     didSet { updateLayerProperties() }
   }
