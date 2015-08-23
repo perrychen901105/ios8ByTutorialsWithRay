@@ -26,7 +26,12 @@ import QuartzCore
 @IBDesignable
 class WatchView: UIView {
   
-    //
+    //Toggles between analog or digital clock design
+    @IBInspectable var enableAnalogDesign: Bool = true {
+        didSet {
+            updateLayerProperties()
+        }
+    }
     
   @IBInspectable var enableClockSecondHand: Bool = false {
     didSet { updateLayerProperties() }
@@ -50,6 +55,10 @@ class WatchView: UIView {
   }
   @IBInspectable var lineWidth: CGFloat = 1.0
 
+    var hourMinuteSecondLayer: CATextLayer!
+    var ampmLayer: CATextLayer!
+    var weekdayLayer: CATextLayer!
+    
   //Image background layer
   var backgroundImageLayer: CALayer!
   @IBInspectable var backgroundImage: UIImage? {
@@ -97,8 +106,12 @@ class WatchView: UIView {
     //Then we layout the background image if there is one.
     layoutBackgroundImageLayer()
 
-    createAnalogClock()
-
+    if enableAnalogDesign == true {
+        createAnalogClock()
+    } else {
+        createDigitalClock()
+    }
+    
     //If we haven't changed any of the inspectable properties.
     updateLayerProperties()
   }
@@ -118,6 +131,12 @@ class WatchView: UIView {
     }
   }
 
+    func createDigitalClock() {
+        layoutHourMinuteSecondText()
+        layoutAmPmText()
+        layoutWeekDayText()
+    }
+    
   //The base circular layer.
   func layoutBackgroundLayer() {
     if backgroundLayer == nil {
@@ -204,14 +223,26 @@ class WatchView: UIView {
 
   func layoutHourMinuteSecondText() {
     //TODO:Implement
+    if hourMinuteSecondLayer == nil {
+        hourMinuteSecondLayer = createTextLayer("00:00:00", fontSize: bounds.size.height/8.5, offset: bounds.size.height/2.0)
+        layer.addSublayer(hourMinuteSecondLayer)
+    }
   }
 
   func layoutAmPmText() {
     //TODO: Implement
+    if ampmLayer == nil {
+        ampmLayer = createTextLayer("am", fontSize: bounds.size.height/13.0, offset: bounds.size.height/1.6)
+        layer.addSublayer(ampmLayer)
+    }
   }
 
   func layoutWeekDayText() {
     //TODO:Implement
+    if weekdayLayer == nil {
+        weekdayLayer = createTextLayer("Thursday", fontSize: bounds.size.height/13.0, offset: bounds.size.height)
+        layer.addSublayer(weekdayLayer)
+    }
   }
 
   //MARK: Property Observer Function
@@ -232,17 +263,31 @@ class WatchView: UIView {
       backgroundLayer.fillColor = backgroundLayerColor.CGColor
     }
     
-    // If user toggles between second hand and ring progress indicator
-    if enableClockSecondHand == true {
-      setHideSecondClockHand(false)
-      setHideRingLayer(true)
-    } else if enableClockSecondHand == false {
-      setHideSecondClockHand(true)
-      setHideRingLayer(false)
+    // If user toggles between analog and digital, we want to hide the components
+    // 1 Check to see if the user has selected analog design mode
+    if enableAnalogDesign == true {
+        // 2
+        setHideAnalogDesign(false)
+        // 3
+        setHideDigitalDesign(true)
+        // If user toggles between second hand and ring progress indicator
+        if enableClockSecondHand == true {
+            setHideSecondClockHand(false)
+            setHideRingLayer(true)
+        } else if enableClockSecondHand == false {
+            setHideSecondClockHand(true)
+            setHideRingLayer(false)
+        } else {
+            setHideRingLayer(true)
+            setHideSecondClockHand(true)
+        }
     } else {
-      setHideRingLayer(true)
-      setHideSecondClockHand(true)
+        // Show digital design
+        setHideDigitalDesign(false)
+        setHideAnalogDesign(true)
     }
+    
+
     
     //Handles toggling between color background and image background.
     if enableColorBackground == true {
@@ -273,10 +318,31 @@ class WatchView: UIView {
 
   func setHideAnalogDesign(willHide: Bool) {
     //TODO: Implement
+    if secondHandLayer != nil {
+        secondHandLayer.hidden = willHide
+    }
+    if hourHandLayer != nil {
+        hourHandLayer.hidden = willHide
+    }
+    if minuteHandLayer != nil {
+        minuteHandLayer.hidden = willHide
+    }
+    if ringLayer != nil {
+        ringLayer.hidden = willHide
+    }
   }
 
   func setHideDigitalDesign(willHide: Bool) {
     //TODO: Implement
+    if hourMinuteSecondLayer != nil {
+        hourMinuteSecondLayer.hidden = willHide
+    }
+    if ampmLayer != nil {
+        ampmLayer.hidden = willHide
+    }
+    if weekdayLayer != nil {
+        weekdayLayer.hidden = willHide
+    }
   }
 
   //MARK: Helper Methods
@@ -298,7 +364,39 @@ class WatchView: UIView {
     
     return handLayer
   }
-
+    
+    func createTextLayer(string: String, fontSize: CGFloat, offset: CGFloat) -> CATextLayer {
+        // 1
+        // Creates a CATextLayer
+        let layer = CATextLayer()
+        // 2
+        // Specifies the text layer's font
+        layer.font = UIFont(name: "HelveticaNeue-Light", size: fontSize)
+        // 3
+        // Sets the font size.
+        layer.fontSize = fontSize
+        // 4
+        // Sets the layer's frame
+        layer.frame = CGRectMake(0.0, 0.0, bounds.size.width/2.0, bounds.size.height/2.0)
+        // 5
+        // Sets the layer's position given the y-axis offset. This is so you can position each text element without overlapping
+        layer.position = CGPointMake(CGRectGetMidX(bounds), offset)
+        // 6
+        // Sets the text layer's string
+        layer.string = string;
+        // 7
+        // Centers the text
+        layer.alignmentMode = kCAAlignmentCenter
+        // 8
+        // Sets the color of text
+        layer.foregroundColor = UIColor.whiteColor().CGColor
+        // 9
+        // Sets the text layer scale to the scale of the device. If you don't scale the text layers yourself, the text may be a bit blurry.
+        layer.contentsScale = UIScreen.mainScreen().scale
+        return layer
+    }
+    
+    
   //Splits date components seperated by ":"
   func grabDateComponents(dateString: String) -> [String] {
     let dateArray = dateString.componentsSeparatedByString(":")
@@ -310,7 +408,12 @@ class WatchView: UIView {
     //Set the current time zone selected
     endTime()
     currentTimeZone = timezone
-    timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "animateAnalogClock", userInfo: nil, repeats: true)
+    if enableAnalogDesign == true {
+        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "animateAnalogClock", userInfo: nil, repeats: true)
+    } else {
+        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "animateDigitalClock", userInfo: nil, repeats: true)
+    }
+
   }
 
   func endTime() {
@@ -357,9 +460,17 @@ class WatchView: UIView {
     }
   }
 
-  func animateDigitalClock() {
-    //TODO: Implement
-  }
+    func animateDigitalClock() {
+        //TODO: Implement
+        // Get today's time
+        // 1
+        let now = NSDate()
+        //Create a date formatter, and set the time zone selected by the user.
+        // 2
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.timeZone = NSTimeZone(name: currentTimeZone)
+        
+    }
 
   func copyClockSettings(clock: WatchView) {
     //TODO: Implement
