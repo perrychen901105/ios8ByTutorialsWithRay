@@ -30,6 +30,7 @@ class WatchCollectionViewController: UICollectionViewController, SettingsViewCon
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    self.listOfClocks = self.createDefaultWatches()
   }
 
   override func didReceiveMemoryWarning() {
@@ -98,4 +99,36 @@ class WatchCollectionViewController: UICollectionViewController, SettingsViewCon
       settingsViewController.delegate = self
     }
   }
+    
+    func createDefaultWatches() -> [WatchView] {
+        let watch1 = WatchView(frame: CGRectZero)
+        watch1.enableAnalogDesign = true
+        watch1.enableClockSecondHand = true
+        watch1.ringThickness = 2.0
+        watch1.ringColor = UIColor(red: 97.0/255.0, green: 171.0/255.0, blue: 250.0/255.0, alpha: 1.0)
+        watch1.ringProgress = 45.0
+        watch1.hourHandColor = UIColor.whiteColor()
+        watch1.minuteHandColor = UIColor.whiteColor()
+        watch1.secondHandColor = UIColor.redColor()
+        watch1.backgroundImage = UIImage(named: "test2.jpg")
+        watch1.currentTimeZone = "Asia/Singapore"
+        watch1.lineWidth = 1.0
+        watch1.ringThickness = 4.0
+        
+        let watch2 = WatchView(frame: CGRectZero)
+        watch2.copyClockSettings(watch1)
+        watch2.backgroundImage = UIImage(named: "test1.jpg")
+        watch2.currentTimeZone = "America/Chicago"
+        watch2.enableClockSecondHand = false
+        
+        let watch3 = WatchView(frame: CGRectZero)
+        watch3.copyClockSettings(watch1)
+        watch2.backgroundImage = UIImage(named: "test3.jpg")
+        watch2.currentTimeZone = "America/New_York"
+        watch2.enableAnalogDesign = false
+        
+        let listOfWatches = [watch1, watch2, watch3]
+        return listOfWatches
+        
+    }
 }

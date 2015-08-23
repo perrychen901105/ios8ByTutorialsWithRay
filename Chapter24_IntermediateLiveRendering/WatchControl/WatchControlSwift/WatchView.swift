@@ -464,16 +464,52 @@ class WatchView: UIView {
         //TODO: Implement
         // Get today's time
         // 1
+        // Creates an NSDateFormatter to format the dateString as you'd link it to appear
         let now = NSDate()
         //Create a date formatter, and set the time zone selected by the user.
         // 2
         let dateFormatter = NSDateFormatter()
         dateFormatter.timeZone = NSTimeZone(name: currentTimeZone)
-        
+        // 4
+        dateFormatter.dateFormat = "hh:mm:ss:a:EEEE"
+        // Extract the hour, minute, and second from the date string
+        // 5
+        let dateComponents = grabDateComponents(dateFormatter.stringFromDate(now))
+        // Convert string to integers
+        let hours = dateComponents[0].toInt()
+        let minutes = dateComponents[1].toInt()
+        let seconds = dateComponents[2].toInt()
+        let ampm = dateComponents[3].lowercaseString
+        let weekday = dateComponents[4]
+        // Combines the different time elements into one single colon delimited string
+        let hourminutesecondString = NSString(format: "%02ld:%02ld:%02ld", hours!, minutes!, seconds!)
+        if let hmsLayer = hourMinuteSecondLayer {
+            hmsLayer.string = hourminutesecondString
+        }
+        if let amPm = ampmLayer {
+            amPm.string = ampm
+        }
+        if let week = weekdayLayer {
+            week.string = weekday
+        }
     }
 
   func copyClockSettings(clock: WatchView) {
     //TODO: Implement
+    enableAnalogDesign = clock.enableAnalogDesign
+    enableClockSecondHand = clock.enableClockSecondHand
+    enableColorBackground = clock.enableColorBackground
+    
+    ringThickness = clock.ringThickness
+    ringColor = clock.ringColor
+    ringProgress = clock.ringProgress
+    hourHandColor = clock.hourHandColor
+    minuteHandColor = clock.minuteHandColor
+    secondHandColor = clock.secondHandColor
+    backgroundImage = clock.backgroundImage
+    lineWidth = clock.lineWidth
+    backgroundLayerColor = clock.backgroundLayerColor
+    currentTimeZone = clock.currentTimeZone
   }
 }
 

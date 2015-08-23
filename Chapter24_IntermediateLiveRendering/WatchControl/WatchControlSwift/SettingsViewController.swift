@@ -62,34 +62,95 @@ class SettingsViewController: UIViewController, TimeZoneTableViewControllerDeleg
   
   func addWatchToList() {
     //TODO: implement
+    watchView.endTime()
+    delegate?.didCreateNewClockSettings(watchView)
+    navigationController!.popViewControllerAnimated(true)
   }
   
   @IBAction func selectClockSecondsType(sender: AnyObject) {
     //TODO: implement
+    let segmentedControler: UISegmentedControl = sender as! UISegmentedControl
+    let selectedSegment = segmentedControler.selectedSegmentIndex
+    
+    if selectedSegment == 0 {
+        watchView.enableClockSecondHand = true
+    } else {
+        watchView.enableClockSecondHand = false
+    }
+    watchView.setNeedsLayout()
+    watchView.layoutIfNeeded()
   }
   
   //Select an image or a color for a background
   @IBAction func selectedClockBackground(sender: AnyObject) {
     //TODO: implement
+    let segmentedController: UISegmentedControl = sender as! UISegmentedControl
+    let selectedSegment = segmentedController.selectedSegmentIndex
+    if selectedSegment == 0 {
+        if !UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.SavedPhotosAlbum) {
+            UIAlertView(title: "Error", message: "Cannot access Saved Photos on device:[", delegate: nil, cancelButtonTitle: "OK").show()
+        } else {
+            let photoPicker: UIImagePickerController = UIImagePickerController()
+            photoPicker.delegate = self
+            photoPicker.allowsEditing = true
+            photoPicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+            self.showDetailViewController(photoPicker, sender: self)
+        }
+    } else {
+        // segment = 1
+        performSegueWithIdentifier("showColorPicker", sender: self)
+        faceTypeSegmentedControl.selectedSegmentIndex = 0
+    }
   }
   
   @IBAction func selectClockDesign(sender: AnyObject) {
     //TODO: implement
+    let segmentedControler: UISegmentedControl = sender as! UISegmentedControl
+    let selectedSegment = segmentedControler.selectedSegmentIndex
+    if selectedSegment == 0 {
+        watchView.enableAnalogDesign = true
+    } else {
+        watchView.enableAnalogDesign = false
+    }
+    watchView.startTimeWithTimeZone(NSTimeZone.localTimeZone().name)
+    watchView.setNeedsLayout()
+    watchView.layoutIfNeeded()
   }
   
   //TimeZoneTableViewControllerDelegate Methods
   func didSelectATimeZone(timezone: String) {
     //TODO: implement
+    selectedTimeZone = timezone
+    watchView.currentTimeZone = timezone
+    navigationController!.popViewControllerAnimated(true)
+    watchView.startTimeWithTimeZone(timezone)
   }
   
   //ColorPicker Controller Delegate
   func didSelectColor(color: UIColor!) {
     //TODO: implement
+    // Enable color background
+    if color != nil {
+        watchView.backgroundLayerColor = color
+        selectedColor = color
+        watchView.setNeedsLayout()
+        watchView.layoutIfNeeded()
+        watchView.enableColorBackground = true
+        faceTypeSegmentedControl.selectedSegmentIndex = 1
+    } else {
+        faceTypeSegmentedControl.selectedSegmentIndex = 0
+    }
   }
   
   //Invoked to open UIImagePicker to select an image.
   func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
     //TODO: implement
+    self.watchView.backgroundImage = info[UIImagePickerControllerEditedImage] as? UIImage
+    self.selectedImage = info[UIImagePickerControllerEditedImage] as? UIImage
+    self.watchView.enableColorBackground = false
+    
+    // update settings clock to show correct results
+    self.watchView.setNeedsLayout()
   }
   
   func imagePickerControllerDidCancel(picker: UIImagePickerController) {
